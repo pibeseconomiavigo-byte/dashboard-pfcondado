@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard Directivo & Simulador Integral - PfCondado (Cloud Sync Edition)</title>
+    <title>Dashboard Directivo & Simulador Integral - PfCondado</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js -->
@@ -14,83 +14,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; -webkit-tap-highlight-color: transparent; }
-        .chart-container { position: relative; height: 320px; width: 100%; min-width: 280px; }
-        @media (min-width: 768px) {
-            .chart-container { height: 380px; }
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; -webkit-text-size-adjust: 100%; }
+        .chart-container { position: relative; height: 380px; width: 100%; }
         .glass-panel { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 10px 30px 0 rgba(31, 38, 135, 0.07); }
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 24px; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #3b82f6; }
-        input:checked + .slider:before { transform: translateX(20px); }
+        input:checked + .slider:before { transform: translateX(26px); }
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .table-responsive { -webkit-overflow-scrolling: touch; }
-        input, select, button { font-size: 16px !important; }
+        input, select { font-size: 16px !important; }
     </style>
 </head>
-<body class="text-gray-800 antialiased pb-24 overflow-x-hidden">
+<body class="text-gray-800 antialiased pb-20">
 
-    <!-- Navegación Superior con Logo PfCondado & Controles Cloud/Guardar -->
+    <!-- Navegación Superior con Logo PfCondado y Botón Guardar Como -->
     <nav class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-14 sm:h-16">
-                <div class="flex items-center space-x-2 sm:space-x-3 overflow-hidden">
-                    <div class="bg-white px-1.5 py-0.5 rounded-lg flex items-center shadow-sm shrink-0">
-                        <svg class="h-6 sm:h-8 w-auto" viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-white px-2 py-1 rounded-lg flex items-center shadow-sm">
+                        <svg class="h-8 w-auto" viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 50C40 30 70 30 90 50C110 70 140 70 160 50C170 40 180 40 190 45" stroke="#0077b6" stroke-width="6" stroke-linecap="round"/>
                             <path d="M70 65C90 55 110 55 130 65" stroke="#48cae4" stroke-width="4" stroke-linecap="round"/>
                             <text x="50" y="90" font-family="Inter, sans-serif" font-weight="700" font-size="32" fill="#0077b6">PfCondado</text>
                         </svg>
                     </div>
-                    <span class="font-bold text-xs sm:text-base tracking-tight truncate hidden sm:inline">Dashboard Cloud & Sync</span>
+                    <span class="font-bold text-lg tracking-wide hidden md:inline">| Gráficos de evolución y simulación</span>
                 </div>
-
-                <!-- Botones de Acción Global (Guardar como & Sincronizar) -->
-                <div class="flex items-center space-x-2">
-                    <button onclick="guardarComoArchivo()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow transition flex items-center space-x-1.5 active:scale-95">
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="guardarComoArchivo()" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-md transition flex items-center space-x-2">
                         <i class="fa-solid fa-download"></i>
                         <span>Guardar como...</span>
                     </button>
-                    <button onclick="sincronizarConNube()" id="btnSync" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow transition flex items-center space-x-1.5 active:scale-95">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span>Sincronizar</span>
-                    </button>
+                    <div class="text-sm text-slate-300 hidden sm:block">
+                        <i class="fa-regular fa-clock mr-1"></i> Cierre Sep 2026
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- BANNER DE NOTIFICACIÓN DE ACTUALIZACIÓN CLOUD -->
-    <div id="cloudUpdateBanner" class="hidden bg-amber-500 text-slate-900 px-4 py-2 text-xs sm:text-sm font-bold text-center shadow-md flex items-center justify-center space-x-3 transition-all z-40 sticky top-14 sm:top-16">
-        <i class="fa-solid fa-triangle-exclamation text-base"></i>
-        <span id="cloudUpdateText">¡Hay una versión más reciente guardada en la nube por otro usuario!</span>
-        <button onclick="aplicarActualizacionNube()" class="bg-slate-900 text-white px-3 py-1 rounded-lg text-xs hover:bg-slate-800 shadow">Actualizar Ahora</button>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
         
         <!-- Panel de Control y KPIs -->
-        <div class="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:justify-between sm:items-end mb-2 fade-in">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-2 fade-in">
             <div>
-                <h1 class="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Panel de Control & Simulación</h1>
-                <p class="text-xs sm:text-sm text-slate-500 mt-1">Modifica valores en simuladores y sincroniza instantáneamente con tu equipo</p>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Panel de Control & Simulación</h1>
+                <p class="text-sm text-slate-500 mt-1">Análisis exhaustivo, proyecciones 2027 y herramientas para PfCondado</p>
             </div>
             
-            <!-- Switches Interactivos -->
-            <div class="bg-white p-2.5 sm:p-3 rounded-xl shadow-sm border border-slate-200 flex justify-around sm:space-x-6">
-                <label class="flex items-center space-x-2 text-xs sm:text-sm font-semibold text-slate-600 cursor-pointer py-1 px-1">
+            <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 flex space-x-6 mt-4 md:mt-0 overflow-x-auto w-full md:w-auto">
+                <label class="flex items-center space-x-2 text-sm font-semibold text-slate-600 whitespace-nowrap">
                     <span>2024</span>
                     <label class="switch"><input type="checkbox" id="toggle2024" checked onchange="updateCharts()"><span class="slider"></span></label>
                 </label>
-                <label class="flex items-center space-x-2 text-xs sm:text-sm font-semibold text-slate-600 cursor-pointer py-1 px-1">
+                <label class="flex items-center space-x-2 text-sm font-semibold text-slate-600 whitespace-nowrap">
                     <span>2025</span>
                     <label class="switch"><input type="checkbox" id="toggle2025" checked onchange="updateCharts()"><span class="slider"></span></label>
                 </label>
-                <label class="flex items-center space-x-2 text-xs sm:text-sm font-semibold text-blue-600 cursor-pointer py-1 px-1">
+                <label class="flex items-center space-x-2 text-sm font-semibold text-blue-600 whitespace-nowrap">
                     <span>2026</span>
                     <label class="switch"><input type="checkbox" id="toggle2026" checked onchange="updateCharts()"><span class="slider"></span></label>
                 </label>
@@ -98,47 +84,47 @@
         </div>
 
         <!-- Tarjetas KPI -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 fade-in">
-            <div class="glass-panel p-4 sm:p-6 rounded-2xl border-l-4 border-blue-500">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 fade-in">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-blue-500">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs sm:text-sm text-slate-500 font-semibold mb-1">Facturación Arcas (Sep 26)</p>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-800">25.316 €</h3>
+                        <p class="text-sm text-slate-500 font-semibold mb-1">Facturación Arcas (Sep 26)</p>
+                        <h3 class="text-2xl font-bold text-slate-800">25.316 €</h3>
                     </div>
-                    <div class="p-2.5 sm:p-3 bg-blue-100 rounded-xl text-blue-600"><i class="fa-solid fa-box text-base sm:text-lg"></i></div>
+                    <div class="p-3 bg-blue-100 rounded-xl text-blue-600"><i class="fa-solid fa-box text-lg"></i></div>
                 </div>
-                <p class="text-xs sm:text-sm text-emerald-600 mt-2.5 sm:mt-3 font-semibold"><i class="fa-solid fa-arrow-up"></i> +40% vs 2024</p>
+                <p class="text-sm text-emerald-600 mt-3 font-semibold"><i class="fa-solid fa-arrow-up"></i> +40% vs 2024</p>
             </div>
             
-            <div class="glass-panel p-4 sm:p-6 rounded-2xl border-l-4 border-emerald-500">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-emerald-500">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs sm:text-sm text-slate-500 font-semibold mb-1">Facturación Flores (Sep 26)</p>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-800">23.149 €</h3>
+                        <p class="text-sm text-slate-500 font-semibold mb-1">Facturación Flores (Sep 26)</p>
+                        <h3 class="text-2xl font-bold text-slate-800">23.149 €</h3>
                     </div>
-                    <div class="p-2.5 sm:p-3 bg-emerald-100 rounded-xl text-emerald-600"><i class="fa-solid fa-leaf text-base sm:text-lg"></i></div>
+                    <div class="p-3 bg-emerald-100 rounded-xl text-emerald-600"><i class="fa-solid fa-leaf text-lg"></i></div>
                 </div>
-                <p class="text-xs sm:text-sm text-emerald-600 mt-2.5 sm:mt-3 font-semibold"><i class="fa-solid fa-arrow-up"></i> +18.8% del Total</p>
+                <p class="text-sm text-emerald-600 mt-3 font-semibold"><i class="fa-solid fa-arrow-up"></i> +18.8% del Total</p>
             </div>
 
-            <div class="glass-panel p-4 sm:p-6 rounded-2xl border-l-4 border-purple-500">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-purple-500 sm:col-span-2 md:col-span-1">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs sm:text-sm text-slate-500 font-semibold mb-1">Agenciado (Sep 26)</p>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-800">19.835 €</h3>
+                        <p class="text-sm text-slate-500 font-semibold mb-1">Agenciado (Sep 26)</p>
+                        <h3 class="text-2xl font-bold text-slate-800">19.835 €</h3>
                     </div>
-                    <div class="p-2.5 sm:p-3 bg-purple-100 rounded-xl text-purple-600"><i class="fa-solid fa-file-contract text-base sm:text-lg"></i></div>
+                    <div class="p-3 bg-purple-100 rounded-xl text-purple-600"><i class="fa-solid fa-file-contract text-lg"></i></div>
                 </div>
-                <p class="text-xs sm:text-sm text-emerald-600 mt-2.5 sm:mt-3 font-semibold"><i class="fa-solid fa-arrow-up"></i> +15.3% vs 2024</p>
+                <p class="text-sm text-emerald-600 mt-3 font-semibold"><i class="fa-solid fa-arrow-up"></i> +15.3% vs 2024</p>
             </div>
         </div>
 
-        <!-- SECCIÓN 1: EVOLUCIÓN MENSUAL Y DISTRIBUCIÓN -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 fade-in">
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl lg:col-span-2 flex flex-col justify-between">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Evolución Comparativa Mensual</h2>
-                    <select id="metricSelector" class="w-full sm:w-auto bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 shadow-sm" onchange="changeMainMetric()">
+        <!-- SECCIÓN 1 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 fade-in">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl lg:col-span-2 flex flex-col justify-between">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800">Evolución Comparativa Mensual</h2>
+                    <select id="metricSelector" class="bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 shadow-sm w-full sm:w-auto" onchange="changeMainMetric()">
                         <option value="ARCA">Arcas</option>
                         <option value="FLORES">Flores</option>
                         <option value="AGENCIADO">Agenciado</option>
@@ -152,99 +138,92 @@
                 </div>
             </div>
 
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col justify-between">
-                <h2 class="text-lg sm:text-2xl font-bold text-slate-800 mb-4 sm:mb-6">Distribución del Ingreso (2026)</h2>
-                <div class="chart-container" style="height: 280px;">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-6">Distribución Ingreso (2026)</h2>
+                <div class="chart-container" style="height: 340px;">
                     <canvas id="distributionChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- SECCIÓN 2: COMPARATIVA TRIMESTRAL Y TICKET MEDIO -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 fade-in">
-            
-            <!-- Gráfico Trimestral -->
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col justify-between">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        <!-- SECCIÓN 2 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
                     <div>
-                        <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Rendimiento por Trimestres</h2>
-                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Comparativa T1, T2 y T3</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-800">Rendimiento por Trimestres</h2>
                     </div>
-                    <select id="quarterMetricSelector" class="w-full sm:w-auto bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-3 py-2 outline-none focus:border-blue-500 shadow-sm" onchange="updateQuarterChart()">
+                    <select id="quarterMetricSelector" class="bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-3 py-2 outline-none focus:border-blue-500 shadow-sm w-full sm:w-auto" onchange="updateQuarterChart()">
                         <option value="ARCA">Arcas</option>
                         <option value="FLORES">Flores</option>
                         <option value="AGENCIADO">Agenciado</option>
                         <option value="SALA">Sala</option>
                     </select>
                 </div>
-                <div class="chart-container" style="height: 300px;">
+                <div class="chart-container" style="height: 340px;">
                     <canvas id="quarterChart"></canvas>
                 </div>
             </div>
 
-            <!-- Gráfico de Evolución del Ticket Medio -->
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col justify-between">
-                <div class="mb-4 sm:mb-0">
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Evolución del Ticket Medio</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Crecimiento real del valor por servicio (2022 - 2026)</p>
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800">Evolución del Ticket Medio (€)</h2>
+                    <p class="text-sm text-slate-500 mt-0.5">Crecimiento real (2022 - 2026)</p>
                 </div>
-                <div class="chart-container" style="height: 300px;">
+                <div class="chart-container" style="height: 340px;">
                     <canvas id="ticketChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- SECCIÓN 3: DOBLE CALCULADORA / SIMULADOR FINANCIERO -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 fade-in">
-            
-            <!-- Simulador 1: Ticket Medio -->
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col">
+        <!-- SECCIÓN 3: SIMULADORES -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col">
                 <div class="flex justify-between items-center mb-2">
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Simulador por Ticket Medio</h2>
-                    <span class="bg-blue-100 text-blue-700 text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full shrink-0">381 Serv.</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800">Simulador Ticket Medio</h2>
+                    <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1.5 rounded-full">381 Serv.</span>
                 </div>
-                <p class="text-xs sm:text-sm text-slate-500 mb-4">Según datos históricos, el volumen base estimado es de 381 servicios.</p>
+                <p class="text-sm text-slate-500 mb-4">Estimación basada en histórico de servicios base.</p>
 
                 <div class="space-y-4 mb-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                             <label class="block text-xs font-bold text-slate-700 mb-1.5">Nº Servicios:</label>
-                            <input type="number" id="simServicios" value="381" oninput="calcularSimuladorFinanciero()" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-base font-bold text-slate-800 focus:border-blue-500 outline-none">
+                            <input type="number" id="simServicios" value="381" oninput="calcularSimuladorFinanciero()" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-base font-bold text-slate-800 outline-none">
                         </div>
-                        <div class="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Ticket Medio (€ / Serv):</label>
-                            <input type="number" id="simTicketMedio" value="3176" oninput="calcularSimuladorFinanciero()" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-base font-bold text-slate-800 focus:border-blue-500 outline-none">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Ticket Medio (€):</label>
+                            <input type="number" id="simTicketMedio" value="3176" oninput="calcularSimuladorFinanciero()" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-base font-bold text-slate-800 outline-none">
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 rounded-xl flex items-center justify-between shadow-lg mt-auto">
+                <div class="bg-slate-900 text-white p-4 rounded-xl flex items-center justify-between shadow-lg mt-auto">
                     <div>
-                        <span class="text-[10px] sm:text-xs uppercase tracking-wider text-blue-400 font-bold"><i class="fa-solid fa-coins mr-1"></i> Facturación Estimada</span>
-                        <h3 class="text-xl sm:text-2xl font-extrabold text-white mt-0.5" id="resSimFacturacion">1.210.056 €</h3>
+                        <span class="text-xs uppercase tracking-wider text-blue-400 font-bold">Facturación Estimada</span>
+                        <h3 class="text-2xl font-extrabold text-white mt-0.5" id="resSimFacturacion">1.210.056 €</h3>
                     </div>
                     <div class="text-right">
-                        <span class="text-[10px] sm:text-xs text-slate-300">Rango Objetivo:</span>
-                        <p class="text-xs sm:text-sm font-semibold text-emerald-400">1.3M€ - 1.4M€</p>
+                        <span class="text-xs text-slate-300">Objetivo:</span>
+                        <p class="text-sm font-semibold text-emerald-400">1.3M€ - 1.4M€</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Simulador 2: Tarifa Oficial Detallada Modificable -->
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col">
                 <div class="flex justify-between items-center mb-2">
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Simulador Tarifas (2021)</h2>
-                    <button onclick="calcularSimuladorOficial()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs shadow transition active:scale-95 shrink-0">Calcular</button>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800">Simulador por Tarifa Detallada</h2>
+                    <button onclick="calcularSimuladorOficial()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow">Calcular</button>
                 </div>
-                <p class="text-xs sm:text-sm text-slate-500 mb-4">Modifica los precios base oficiales de cada concepto.</p>
+                <p class="text-sm text-slate-500 mb-4">Modifica los precios base oficiales.</p>
 
-                <div class="table-responsive overflow-y-auto rounded-xl border border-slate-200 bg-white mb-4" style="max-height: 200px;">
-                    <table class="min-w-full text-xs text-left whitespace-nowrap sm:whitespace-normal">
+                <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white mb-4" style="max-height: 200px;">
+                    <table class="min-w-full text-xs text-left">
                         <thead class="bg-slate-50 sticky top-0">
                             <tr>
-                                <th class="px-3 py-2 font-semibold text-slate-700">Concepto Oficial</th>
+                                <th class="px-3 py-2 font-semibold text-slate-700">Concepto</th>
                                 <th class="px-3 py-2 font-semibold text-slate-700 text-right">Base (€)</th>
-                                <th class="px-3 py-2 font-semibold text-slate-700 text-center w-28">Editable (€)</th>
+                                <th class="px-3 py-2 font-semibold text-slate-700 text-center w-28">Editar (€)</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100" id="tablaTarifasSimulador"></tbody>
@@ -253,522 +232,95 @@
 
                 <div class="bg-slate-900 text-white p-4 rounded-xl flex items-center justify-between mt-auto">
                     <div>
-                        <span class="text-[10px] sm:text-xs text-slate-400">Total por Tarifas:</span>
+                        <span class="text-xs text-slate-400">Total Tarifas:</span>
                         <h4 class="text-xl sm:text-2xl font-extrabold text-white" id="resSimTarifaTotal">0 €</h4>
                     </div>
                     <div class="text-right">
-                        <label class="block text-[10px] sm:text-xs text-slate-400 mb-1">Nº Servicios:</label>
-                        <input type="number" id="inputNumServicios" value="381" oninput="calcularSimuladorOficial()" class="w-16 sm:w-20 bg-slate-800 border border-slate-600 rounded p-1.5 text-right text-xs font-bold text-white outline-none">
+                        <label class="block text-xs text-slate-400 mb-1">Nº Serv:</label>
+                        <input type="number" id="inputNumServicios" value="381" oninput="calcularSimuladorOficial()" class="w-16 bg-slate-800 border border-slate-600 rounded p-1 text-right text-xs font-bold text-white outline-none">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SECCIÓN 4: TENDENCIA 2027 & RENTABILIDAD POR PARTIDA -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 fade-in">
-            
-            <!-- Tendencia 2027 -->
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col justify-between">
+        <!-- Resto de secciones de gráficos -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between">
                 <div>
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
-                        <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Estimación y Tendencia 2027</h2>
-                        <span class="bg-indigo-100 text-indigo-700 text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full">Proyección</span>
-                    </div>
-                    <p class="text-xs sm:text-sm text-slate-500 mb-4">Asegurados (<span class="text-red-600 font-bold">↓</span>) vs Particulares/Alquileres (<span class="text-emerald-600 font-bold">↑</span>)</p>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-2">Tendencia 2027</h2>
+                    <p class="text-sm text-slate-500 mb-6">Asegurados vs Particulares y Alquileres</p>
                 </div>
-                <div class="chart-container" style="height: 300px;">
+                <div class="chart-container" style="height: 340px;">
                     <canvas id="trend2027Chart"></canvas>
                 </div>
             </div>
 
-            <!-- Rentabilidad por Partida con Botón Explicativo -->
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col justify-between">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between">
                 <div>
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-1">
-                        <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Rentabilidad por Partida</h2>
-                        <button onclick="toggleMarginHelpModal()" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1 shadow-sm active:scale-95">
-                            <i class="fa-solid fa-circle-question text-base"></i>
-                            <span>¿Cómo se calcula?</span>
-                        </button>
-                    </div>
-                    <p class="text-xs sm:text-sm text-slate-500 mb-4">Peso porcentual y aportación al margen bruto global.</p>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-2">Rentabilidad por Partida</h2>
+                    <p class="text-sm text-slate-500 mb-4">Peso porcentual en el margen bruto.</p>
                 </div>
-                
-                <div class="chart-container" style="height: 260px;">
+                <div class="chart-container" style="height: 300px;">
                     <canvas id="marginBarChart"></canvas>
-                </div>
-
-                <!-- MODAL EXPLICATIVO DE RENTABILIDAD POR PARTIDA -->
-                <div id="marginHelpModal" class="hidden mt-4 bg-emerald-50/95 p-4 sm:p-5 rounded-2xl border border-emerald-200 text-xs space-y-3 transition-all">
-                    <div class="flex justify-between items-center border-b border-emerald-200 pb-2">
-                        <p class="font-bold text-emerald-900 text-sm"><i class="fa-solid fa-calculator mr-1"></i> Memoria de Cálculo (Rentabilidad)</p>
-                        <button onclick="toggleMarginHelpModal()" class="text-emerald-600 hover:text-emerald-800 font-bold p-1"><i class="fa-solid fa-xmark text-base"></i></button>
-                    </div>
-                    <p class="text-slate-700">El margen relativo de cada partida se calcula dividiendo su facturación específica entre la global:</p>
-                    <div class="space-y-1.5 text-slate-600 bg-white p-3 rounded-xl border border-emerald-100">
-                        <p><strong>Fórmula:</strong> <code class="bg-slate-100 px-1 py-0.5 rounded text-[11px]">Rentabilidad (%) = (Fact. Partida / Fact. Global) * 100</code></p>
-                    </div>
-                    <div class="bg-emerald-100/60 p-3 rounded-xl border border-emerald-200 text-emerald-900">
-                        <p class="font-semibold mb-1">📌 Ejemplo (Arcas):</p>
-                        <p class="text-slate-700 text-[11px]">(254.479 / 1.161.217) * 100 = <strong>21.9% (Aprox. 28.5% ponderado)</strong></p>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SECCIÓN 5: MATRIZ DE RENTABILIDAD Y TABLA DE TARIFAS OFICIALES -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 fade-in">
-            
-            <!-- Matriz Scatter -->
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col justify-between">
-                <div>
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-1">
-                        <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Matriz de Rentabilidad Estratégica</h2>
-                        <button onclick="toggleHelpModal()" class="bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200 px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1 shadow-sm active:scale-95">
-                            <i class="fa-solid fa-circle-question text-base"></i>
-                            <span>¿Cómo se calcula?</span>
-                        </button>
-                    </div>
-                    <p class="text-xs sm:text-sm text-slate-500 mb-4">Relación Rentabilidad vs Volumen Operativo</p>
-                </div>
-                
-                <div class="chart-container" style="height: 300px;">
+        <!-- Matriz & Tabla Referencia -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-2">Matriz de Rentabilidad</h2>
+                <div class="chart-container" style="height: 320px;">
                     <canvas id="scatterChart"></canvas>
-                </div>
-                
-                <!-- EXPLICACIÓN DE LOS CUADRANTES -->
-                <div class="mt-6 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 text-xs space-y-3 shadow-inner">
-                    <p class="font-bold text-slate-800 border-b border-slate-200 pb-1.5 mb-1">
-                        <i class="fa-solid fa-compass text-blue-500 mr-1"></i> Cuadrantes:
-                    </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div class="flex items-start space-x-2">
-                            <span class="text-emerald-600 font-bold text-base shrink-0">■</span>
-                            <div><strong class="text-slate-700">Arriba-Derecha:</strong> Más servicios y más ingresos (Ej. 2024).</div>
-                        </div>
-                        <div class="flex items-start space-x-2">
-                            <span class="text-blue-600 font-bold text-base shrink-0">■</span>
-                            <div><strong class="text-slate-700">Arriba-Izquierda:</strong> Menos servicios, mayor ticket (Ej. 2026).</div>
-                        </div>
-                        <div class="flex items-start space-x-2">
-                            <span class="text-amber-500 font-bold text-base shrink-0">■</span>
-                            <div><strong class="text-slate-700">Abajo-Derecha:</strong> Más volumen, menos margen (Ej. 2023).</div>
-                        </div>
-                        <div class="flex items-start space-x-2">
-                            <span class="text-slate-400 font-bold text-base shrink-0">■</span>
-                            <div><strong class="text-slate-700">Abajo-Izquierda:</strong> Declive de volumen y facturación.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MODAL DE CÁLCULOS -->
-                <div id="helpModal" class="hidden mt-4 bg-blue-50/95 p-4 sm:p-5 rounded-2xl border border-blue-200 text-xs space-y-3 transition-all">
-                    <div class="flex justify-between items-center border-b border-blue-200 pb-2">
-                        <p class="font-bold text-blue-900 text-sm"><i class="fa-solid fa-calculator mr-1"></i> Memoria de Cálculo (Matriz)</p>
-                        <button onclick="toggleHelpModal()" class="text-blue-500 hover:text-blue-700 font-bold p-1"><i class="fa-solid fa-xmark text-base"></i></button>
-                    </div>
-                    <p class="text-slate-700">Las coordenadas (X, Y) comparan el año actual frente al anterior:</p>
-                    <div class="space-y-1.5 text-slate-600 bg-white p-3 rounded-xl border border-blue-100">
-                        <p><strong>1. Eje X (Volumen):</strong> <code class="bg-slate-100 px-1 py-0.5 rounded text-[10px]">((Serv_Act - Serv_Ant) / Serv_Ant) * 100</code></p>
-                        <p><strong>2. Eje Y (Facturación):</strong> <code class="bg-slate-100 px-1 py-0.5 rounded text-[10px]">((Fact_Act - Fact_Ant) / Fact_Ant) * 100</code></p>
-                    </div>
                 </div>
             </div>
 
-            <!-- Tabla Tarifas 2021 -->
-            <div class="glass-panel p-5 sm:p-8 rounded-2xl flex flex-col">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800">Tarifas Base (2021)</h2>
-                    <span class="bg-red-100 text-red-700 text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full">Oficiales</span>
-                </div>
-                
-                <div class="table-responsive overflow-y-auto rounded-xl border border-slate-200 bg-white" style="max-height: 420px;">
-                    <table class="min-w-full text-xs sm:text-sm text-left">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-4">Tarifas Base Referencia (2021)</h2>
+                <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" style="max-height: 320px;">
+                    <table class="min-w-full text-sm text-left">
                         <thead class="bg-slate-50 sticky top-0">
                             <tr>
-                                <th class="px-3 sm:px-4 py-3 font-semibold text-slate-700">Concepto Propio</th>
-                                <th class="px-3 sm:px-4 py-3 font-semibold text-slate-700 text-right">Base (€)</th>
-                                <th class="px-3 sm:px-4 py-3 font-semibold text-slate-700 text-right">+ IVA 21%</th>
+                                <th class="px-4 py-3 font-semibold text-slate-700">Concepto</th>
+                                <th class="px-4 py-3 font-semibold text-slate-700 text-right">Base (€)</th>
+                                <th class="px-4 py-3 font-semibold text-slate-700 text-right">+ IVA</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5 font-medium text-blue-700">Agenciado, Tramitación</td><td class="px-3 sm:px-4 py-2.5 text-right">190,00</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">229,90</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Amortajamiento y Prep.</td><td class="px-3 sm:px-4 py-2.5 text-right">220,00</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">266,20</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Carroza Fúnebre Mod. 1</td><td class="px-3 sm:px-4 py-2.5 text-right">220,00</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">266,20</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Coronario Mod. 3</td><td class="px-3 sm:px-4 py-2.5 text-right">180,00</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">217,80</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Furgón en Domicilio</td><td class="px-3 sm:px-4 py-2.5 text-right">175,00</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">211,75</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Sala de Velaciones (24h)</td><td class="px-3 sm:px-4 py-2.5 text-right">615,00</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">744,15</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Porteadores (Unidad)</td><td class="px-3 sm:px-4 py-2.5 text-right">131,82</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">159,50</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Vaso de Zinc (Traslados)</td><td class="px-3 sm:px-4 py-2.5 text-right">225,00</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">272,25</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Personal Ayuda (x hora)</td><td class="px-3 sm:px-4 py-2.5 text-right">65,34</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">79,06</td></tr>
-                            <tr class="hover:bg-slate-50 transition"><td class="px-3 sm:px-4 py-2.5">Vestir</td><td class="px-3 sm:px-4 py-2.5 text-right">60,00</td><td class="px-3 sm:px-4 py-2.5 text-right font-semibold">60,00</td></tr>
+                            <tr><td class="px-4 py-3">Agenciado, Tramitación</td><td class="px-4 py-3 text-right">190,00</td><td class="px-4 py-3 text-right">229,90</td></tr>
+                            <tr><td class="px-4 py-3">Amortajamiento y Prep.</td><td class="px-4 py-3 text-right">220,00</td><td class="px-4 py-3 text-right">266,20</td></tr>
+                            <tr><td class="px-4 py-3">Carroza Fúnebre</td><td class="px-4 py-3 text-right">220,00</td><td class="px-4 py-3 text-right">266,20</td></tr>
+                            <tr><td class="px-4 py-3">Sala de Velaciones</td><td class="px-4 py-3 text-right">615,00</td><td class="px-4 py-3 text-right">744,15</td></tr>
+                            <tr><td class="px-4 py-3">Porteadores (Unidad)</td><td class="px-4 py-3 text-right">131,82</td><td class="px-4 py-3 text-right">159,50</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- SECCIÓN 6: GRÁFICO DE RADAR MULTIDIMENSIONAL -->
-        <div class="glass-panel p-5 sm:p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center border-b border-slate-200 pb-4 gap-3">
-                <div>
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800"><i class="fa-solid fa-chart-pie text-blue-600 mr-2"></i> Evaluación Multidimensional (Radar)</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Volumen, Facturación, Ticket Medio, Particulares y Margen Operativo.</p>
-                </div>
-                
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="toggleRadarModal('calc')" class="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1 shadow-sm active:scale-95">
-                        <i class="fa-solid fa-calculator"></i>
-                        <span>Cálculo</span>
-                    </button>
-                    <button onclick="toggleRadarModal('guide')" class="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1 shadow-sm active:scale-95">
-                        <i class="fa-solid fa-book-open"></i>
-                        <span>Guía</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- PANEL 1: CÁLCULO -->
-            <div id="radarCalcModal" class="hidden bg-blue-50/95 p-4 sm:p-6 rounded-2xl border border-blue-200 text-xs space-y-4 transition-all shadow-inner">
-                <div class="flex justify-between items-center border-b border-blue-200 pb-2">
-                    <p class="font-bold text-blue-900 text-sm"><i class="fa-solid fa-calculator mr-1"></i> Fórmulas del Radar</p>
-                    <button onclick="toggleRadarModal('calc')" class="text-blue-500 hover:text-blue-700 font-bold p-1"><i class="fa-solid fa-xmark text-base"></i></button>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    <div class="bg-white p-3 rounded-xl border border-blue-100 space-y-1">
-                        <p class="font-bold text-slate-900">1. Volumen</p>
-                        <p class="text-slate-600 text-[11px]">(Serv_Reales / 450) * 100</p>
-                    </div>
-                    <div class="bg-white p-3 rounded-xl border border-blue-100 space-y-1">
-                        <p class="font-bold text-slate-900">2. Facturación</p>
-                        <p class="text-slate-600 text-[11px]">(Fact_Real / 1.400.000) * 100</p>
-                    </div>
-                    <div class="bg-white p-3 rounded-xl border border-blue-100 space-y-1">
-                        <p class="font-bold text-slate-900">3. Ticket Medio</p>
-                        <p class="text-slate-600 text-[11px]">(Ticket_Real / 3.500) * 100</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PANEL 2: GUÍA -->
-            <div id="radarGuideModal" class="hidden bg-indigo-50/95 p-4 sm:p-5 rounded-2xl border border-indigo-200 text-xs space-y-3 transition-all shadow-inner">
-                <div class="flex justify-between items-center border-b border-indigo-200 pb-2">
-                    <p class="font-bold text-indigo-900 text-sm"><i class="fa-solid fa-book-open mr-1"></i> Guía Estratégica</p>
-                    <button onclick="toggleRadarModal('guide')" class="text-indigo-500 hover:text-indigo-700 font-bold p-1"><i class="fa-solid fa-xmark text-base"></i></button>
-                </div>
-                <p class="text-slate-700">El polígono mayor indica mejor rendimiento. 2026 destaca por su Ticket Medio y Margen Operativo.</p>
-            </div>
-            
-            <div class="chart-container" style="height: 350px;">
-                <canvas id="radarChart"></canvas>
-            </div>
-        </div>
-
-        <!-- SECCIÓN 7: COMPOSICIÓN DEPARTAMENTAL MENSUAL -->
-        <div class="glass-panel p-5 sm:p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 pb-4 gap-2">
-                <div>
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800"><i class="fa-solid fa-layer-group text-blue-600 mr-2"></i> Composición Departamental (2026)</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Barras apiladas con totales mensuales visibles.</p>
-                </div>
-                <span class="bg-emerald-100 text-emerald-700 text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full shrink-0">Totales Arriba</span>
-            </div>
-            
-            <div class="chart-container" style="height: 380px;">
-                <canvas id="stackedBarChart"></canvas>
-            </div>
-        </div>
-
-        <!-- SECCIÓN 8: DISTRIBUCIÓN PROPORCIONAL (ÁREA POLAR) -->
-        <div class="glass-panel p-5 sm:p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 pb-4 gap-2">
-                <div>
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800"><i class="fa-solid fa-compass-drafting text-purple-600 mr-2"></i> Área Polar de Ingresos (2026)</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Peso relativo de cada partida de negocio.</p>
-                </div>
-                <span class="bg-purple-100 text-purple-700 text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full shrink-0">Interactivo</span>
-            </div>
-            
-            <div class="chart-container" style="height: 350px;">
-                <canvas id="polarAreaChart"></canvas>
-            </div>
-        </div>
-
-        <!-- SECCIÓN 9: COMPARATIVA PLURIANUAL -->
-        <div class="glass-panel p-5 sm:p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center border-b border-slate-200 pb-4 gap-3">
-                <div>
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800"><i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Comparativa Plurianual (2022 - 2026)</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Volumen total consolidado por ejercicio.</p>
-                </div>
-                
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="toggleMultiYearModal('calc')" class="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1 shadow-sm active:scale-95">
-                        <i class="fa-solid fa-calculator"></i>
-                        <span>Cálculo</span>
-                    </button>
-                    <button onclick="toggleMultiYearModal('guide')" class="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1 shadow-sm active:scale-95">
-                        <i class="fa-solid fa-book-open"></i>
-                        <span>Guía</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- MODAL PLURIANUAL: CÁLCULO -->
-            <div id="multiYearCalcModal" class="hidden bg-blue-50/95 p-4 sm:p-5 rounded-2xl border border-blue-200 text-xs space-y-3 transition-all">
-                <div class="flex justify-between items-center border-b border-blue-200 pb-2">
-                    <p class="font-bold text-blue-900 text-sm"><i class="fa-solid fa-calculator mr-1"></i> Memoria Plurianual</p>
-                    <button onclick="toggleMultiYearModal('calc')" class="text-blue-500 hover:text-blue-700 font-bold p-1"><i class="fa-solid fa-xmark text-base"></i></button>
-                </div>
-                <p class="text-slate-700">Suma total extraída de los cierres oficiales de PfCondado. 2026 corresponde a cierre a Septiembre.</p>
-            </div>
-
-            <!-- MODAL PLURIANUAL: GUÍA -->
-            <div id="multiYearGuideModal" class="hidden bg-indigo-50/95 p-4 sm:p-5 rounded-2xl border border-indigo-200 text-xs space-y-3 transition-all">
-                <div class="flex justify-between items-center border-b border-indigo-200 pb-2">
-                    <p class="font-bold text-indigo-900 text-sm"><i class="fa-solid fa-book-open mr-1"></i> Guía Estratégica</p>
-                    <button onclick="toggleMultiYearModal('guide')" class="text-indigo-500 hover:text-indigo-700 font-bold p-1"><i class="fa-solid fa-xmark text-base"></i></button>
-                </div>
-                <p class="text-slate-700">Muestra el crecimiento constante de cuota de comarca impulsado por tarifas y volumen.</p>
-            </div>
-
-            <div class="chart-container" style="height: 320px;">
-                <canvas id="multiYearChart"></canvas>
-            </div>
-        </div>
-
-        <!-- SECCIÓN 10: ESQUELAS ATLÁNTICO CON FILTRO LATERAL -->
-        <div class="glass-panel p-5 sm:p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 pb-4 gap-3">
-                <div>
-                    <h2 class="text-lg sm:text-2xl font-bold text-slate-800"><i class="fa-solid fa-filter text-emerald-600 mr-2"></i> Esquelas Atlántico (2022 - 2026)</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Filtra funerarias interactivamente.</p>
-                </div>
-                <div class="flex space-x-2">
-                    <button onclick="toggleAllEsquelas(true)" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 px-3 py-1.5 rounded-lg text-xs font-bold transition active:scale-95">Todas</button>
-                    <button onclick="toggleAllEsquelas(false)" class="bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold transition active:scale-95">Ninguna</button>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <!-- Panel Lateral de Filtros -->
-                <div class="lg:col-span-1 bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col space-y-3">
-                    <p class="font-bold text-slate-800 text-xs sm:text-sm border-b border-slate-200 pb-2"><i class="fa-solid fa-list-check mr-1 text-emerald-600"></i> Seleccionar Zonas:</p>
-                    <div class="grid grid-cols-2 sm:grid-cols-1 gap-2 text-xs max-h-56 lg:max-h-64 overflow-y-auto pr-1" id="esquelasCheckboxes">
-                        <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer p-1"><input type="checkbox" class="esq-chk" value="0" checked onchange="updateEsquelasChart()"><span class="truncate">P.F. Condado</span></label>
-                        <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer p-1"><input type="checkbox" class="esq-chk" value="1" checked onchange="updateEsquelasChart()"><span class="truncate">P.F. do Baixo Miño</span></label>
-                        <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer p-1"><input type="checkbox" class="esq-chk" value="2" checked onchange="updateEsquelasChart()"><span class="truncate">P.F. de Tomiño</span></label>
-                        <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer p-1"><input type="checkbox" class="esq-chk" value="3" checked onchange="updateEsquelasChart()"><span class="truncate">Emorvisa</span></label>
-                        <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer p-1"><input type="checkbox" class="esq-chk" value="4" checked onchange="updateEsquelasChart()"><span class="truncate">Miñomemorial</span></label>
-                        <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer p-1"><input type="checkbox" class="esq-chk" value="5" checked onchange="updateEsquelasChart()"><span class="truncate">Vigomemorial</span></label>
-                        <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer p-1"><input type="checkbox" class="esq-chk" value="6" checked onchange="updateEsquelasChart()"><span class="truncate">Fª Palacius</span></label>
-                        <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer p-1"><input type="checkbox" class="esq-chk" value="7" checked onchange="updateEsquelasChart()"><span class="truncate">No Firmadas</span></label>
-                    </div>
-                </div>
-
-                <!-- Gráfico Principal Esquelas -->
-                <div class="lg:col-span-3 chart-container" style="height: 340px;">
-                    <canvas id="esquelasDynamicChart"></canvas>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Firebase SDKs para Sincronización Cloud Automática -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'pfcondado-dashboard-default';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-
-        let db, auth;
-        let remoteLatestData = null;
-        let localVersionTimestamp = Date.now();
-
-        window.initCloudSync = async function() {
-            if (!firebaseConfig) {
-                console.warn("Firebase no configurado. Funcionando en modo local.");
-                return;
-            }
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'dashboard_state');
-                
-                // Escuchar en tiempo real cambios de cualquier usuario
-                onSnapshot(docRef, (docSnap) => {
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        if (data.timestamp && data.timestamp > localVersionTimestamp) {
-                            remoteLatestData = data;
-                            document.getElementById('cloudUpdateBanner').classList.remove('hidden');
-                        }
-                    }
-                }, (error) => {
-                    console.error("Error en sincronización en tiempo real:", error);
-                });
-
-            } catch (e) {
-                console.error("Error inicializando nube:", e);
-            }
-        };
-
-        window.sincronizarConNube = async function() {
-            if (!db || !auth || !auth.currentUser) {
-                alertCustom("La sincronización en la nube se activará en modo en línea.");
-                return;
-            }
-            try {
-                const btn = document.getElementById('btnSync');
-                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Guardando...</span>`;
-
-                const stateToSave = {
-                    timestamp: Date.now(),
-                    servicios: document.getElementById('simServicios').value,
-                    ticketMedio: document.getElementById('simTicketMedio').value,
-                    numServiciosOficial: document.getElementById('inputNumServicios').value,
-                    tarifas: getTarifasModificadasValues()
-                };
-
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'dashboard_state');
-                await setDoc(docRef, stateToSave);
-                localVersionTimestamp = stateToSave.timestamp;
-
-                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>Sincronizar</span>`;
-                alertCustom("¡Datos sincronizados y guardados en la nube correctamente para todo el equipo!");
-            } catch (err) {
-                console.error(err);
-                alertCustom("Error al sincronizar con la nube.");
-                document.getElementById('btnSync').innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>Sincronizar</span>`;
-            }
-        };
-
-        window.aplicarActualizacionNube = function() {
-            if (!remoteLatestData) return;
-            document.getElementById('simServicios').value = remoteLatestData.servicios || 381;
-            document.getElementById('simTicketMedio').value = remoteLatestData.ticketMedio || 3176;
-            document.getElementById('inputNumServicios').value = remoteLatestData.numServiciosOficial || 381;
-            
-            if (remoteLatestData.tarifas) {
-                remoteLatestData.tarifas.forEach((val, idx) => {
-                    const input = document.getElementById(`tarifaInput_${idx}`);
-                    if (input) input.value = val;
-                });
-            }
-
-            calcularSimuladorFinanciero();
-            calcularSimuladorOficial();
-            localVersionTimestamp = remoteLatestData.timestamp;
-            document.getElementById('cloudUpdateBanner').classList.add('hidden');
-            alertCustom("¡Dashboard actualizado con la versión más reciente de la nube!");
-        };
-
-        function getTarifasModificadasValues() {
-            let vals = [];
-            for (let i = 0; i < 10; i++) {
-                const inp = document.getElementById(`tarifaInput_${i}`);
-                vals.push(inp ? parseFloat(inp.value) || 0 : 0);
-            }
-            return vals;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof window.initCloudSync === 'function') {
-                window.initCloudSync();
-            }
-        });
-    </script>
-
-    <!-- Lógica JavaScript Principal -->
     <script>
         const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Sept.'];
-        
-        const dbData = {
-            'ARCA': {
-                2024: [36191, 18165, 30318, 29586, 27366, 30680, 24311, 20121, 18057],
-                2025: [31030, 25211, 34757, 25048, 26727, 20298, 16272, 25352, 27809],
-                2026: [35531, 23626, 34675, 21363, 34379, 20605, 31676, 27303, 25316]
-            },
-            'AGENCIADO': {
-                2024: [25288, 22100, 23089, 24761, 23584, 21468, 15789, 16612, 17194],
-                2025: [27592, 24500, 27514, 20612, 21935, 17079, 16341, 20150, 17617],
-                2026: [21580, 19500, 26994, 20597, 17397, 15561, 20349, 16218, 19835]
-            },
-            'VESTIR': {
-                2024: [8586, 5961, 8533, 8409, 7168, 7087, 5823, 5523, 5500],
-                2025: [8737, 6777, 9650, 7097, 7010, 5901, 5623, 6874, 7073],
-                2026: [9071, 7300, 8179, 6835, 7449, 5455, 8545, 6042, 7132]
-            },
-            'CARGADORES': {
-                2024: [9839, 6174, 7385, 7645, 7495, 8559, 5978, 6078, 5496],
-                2025: [9068, 5764, 9916, 9083, 7875, 6239, 4544, 8181, 7384],
-                2026: [8997, 8398, 11059, 6618, 9355, 6255, 7249, 7797, 6791]
-            },
-            'FLORES': {
-                2024: [22322, 18500, 24497, 21400, 23000, 19500, 17000, 20000, 18000],
-                2025: [21401, 20500, 23869, 19000, 21500, 17500, 15000, 22000, 20000],
-                2026: [25396, 21000, 26000, 22301, 26065, 22301, 29230, 25584, 23149]
-            },
-            'SALA': {
-                2024: [14500, 11000, 15000, 12000, 13000, 11500, 9000, 12000, 11000],
-                2025: [15000, 12500, 16000, 11000, 14000, 10000, 8500, 14000, 12500],
-                2026: [16500, 14000, 17500, 13500, 19245, 16427, 23372, 20554, 18210]
-            }
+        const db = {
+            'ARCA': { 2024: [36191, 18165, 30318, 29586, 27366, 30680, 24311, 20121, 18057], 2025: [31030, 25211, 34757, 25048, 26727, 20298, 16272, 25352, 27809], 2026: [35531, 23626, 34675, 21363, 34379, 20605, 31676, 27303, 25316] },
+            'AGENCIADO': { 2024: [25288, 22100, 23089, 24761, 23584, 21468, 15789, 16612, 17194], 2025: [27592, 24500, 27514, 20612, 21935, 17079, 16341, 20150, 17617], 2026: [21580, 19500, 26994, 20597, 17397, 15561, 20349, 16218, 19835] },
+            'VESTIR': { 2024: [8586, 5961, 8533, 8409, 7168, 7087, 5823, 5523, 5500], 2025: [8737, 6777, 9650, 7097, 7010, 5901, 5623, 6874, 7073], 2026: [9071, 7300, 8179, 6835, 7449, 5455, 8545, 6042, 7132] },
+            'CARGADORES': { 2024: [9839, 6174, 7385, 7645, 7495, 8559, 5978, 6078, 5496], 2025: [9068, 5764, 9916, 9083, 7875, 6239, 4544, 8181, 7384], 2026: [8997, 8398, 11059, 6618, 9355, 6255, 7249, 7797, 6791] },
+            'FLORES': { 2024: [22322, 18500, 24497, 21400, 23000, 19500, 17000, 20000, 18000], 2025: [21401, 20500, 23869, 19000, 21500, 17500, 15000, 22000, 20000], 2026: [25396, 21000, 26000, 22301, 26065, 22301, 29230, 25584, 23149] },
+            'SALA': { 2024: [14500, 11000, 15000, 12000, 13000, 11500, 9000, 12000, 11000], 2025: [15000, 12500, 16000, 11000, 14000, 10000, 8500, 14000, 12500], 2026: [16500, 14000, 17500, 13500, 19245, 16427, 23372, 20554, 18210] }
         };
-
-        const multiYearData = {
-            labels: ['2022', '2023', '2024', '2025', '2026 (Sep)'],
-            datasets: [{
-                label: 'Facturación Global Anual (€)',
-                data: [1152000, 1184000, 1243000, 1161217, 1204073],
-                backgroundColor: ['#94a3b8', '#f59e0b', '#10b981', '#8b5cf6', '#3b82f6'],
-                borderWidth: 0,
-                borderRadius: 6
-            }]
-        };
-
-        const esquelasYears = ['2022', '2023', '2024', '2025', '2026 (Parcial)'];
-        const esquelasDatasetsRaw = [
-            { label: 'P.F. Condado', data: [789, 761, 803, 804, 520], color: '#3b82f6' },
-            { label: 'P.F. do Baixo Miño', data: [300, 253, 270, 305, 210], color: '#10b981' },
-            { label: 'P.F. de Tomiño', data: [120, 103, 102, 105, 75], color: '#f59e0b' },
-            { label: 'Emorvisa', data: [32, 28, 25, 14, 18], color: '#8b5cf6' },
-            { label: 'Miñomemorial', data: [14, 20, 11, 16, 12], color: '#ec4899' },
-            { label: 'Vigomemorial', data: [30, 15, 6, 12, 8], color: '#64748b' },
-            { label: 'Fª Palacius', data: [4, 15, 0, 0, 0], color: '#ef4444' },
-            { label: 'No Firmadas', data: [16, 12, 6, 8, 5], color: '#94a3b8' }
-        ];
 
         const tarifasOficiales2021 = [
             { concepto: "Agenciado, Tramitación", precio: 190.00 },
             { concepto: "Amortajamiento y Prep.", precio: 220.00 },
-            { concepto: "Carroza Fúnebre Mod. 1", precio: 220.00 },
-            { concepto: "Coronario Mod. 3", precio: 180.00 },
-            { concepto: "Furgón en Domicilio", precio: 175.00 },
-            { concepto: "Sala de Velaciones (24h)", precio: 615.00 },
-            { concepto: "Porteadores (Unidad)", precio: 131.82 },
-            { concepto: "Vaso de Zinc (Traslados)", precio: 225.00 },
-            { concepto: "Personal Ayuda (x hora)", precio: 65.34 },
-            { concepto: "Vestir", precio: 60.00 }
+            { concepto: "Carroza Fúnebre", precio: 220.00 },
+            { concepto: "Sala de Velaciones", precio: 615.00 },
+            { concepto: "Porteadores (Unidad)", precio: 131.82 }
         ];
 
-        let monthlyChart, distributionChart, scatterChart, trend2027Chart, quarterChart, ticketChart, marginBarChart, radarChart, stackedBarChart, polarAreaChart, multiYearChart, esquelasDynamicChart;
-        const colors = {
-            2024: { border: '#94a3b8', bg: 'rgba(148, 163, 184, 0.2)' },
-            2025: { border: '#f59e0b', bg: 'rgba(245, 158, 11, 0.2)' },
-            2026: { border: '#3b82f6', bg: 'rgba(59, 130, 246, 0.2)' }
-        };
+        let monthlyChart, distributionChart, scatterChart, trend2027Chart, quarterChart, ticketChart, marginBarChart;
+        const colors = { 2024: '#94a3b8', 2025: '#f59e0b', 2026: '#3b82f6' };
 
         document.addEventListener('DOMContentLoaded', () => {
             initMonthlyChart('ARCA');
@@ -778,34 +330,10 @@
             initMarginBarChart();
             initTrend2027Chart();
             initScatterChart();
-            initRadarChart();
-            initStackedBarChart();
-            initPolarAreaChart();
-            initMultiYearChart();
-            initEsquelasChart();
             inicializarTablaSimulador();
             calcularSimuladorFinanciero();
             calcularSimuladorOficial();
         });
-
-        function alertCustom(msg) {
-            alert(msg); // O modal personalizado si se requiere
-        }
-
-        // FUNCIONALIDAD DE "GUARDAR COMO..."
-        function guardarComoArchivo() {
-            // Actualizamos los valores de los inputs en el DOM estático antes de serializar
-            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Dashboard_PfCondado_${new Date().toISOString().slice(0,10)}.html`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
 
         function initMonthlyChart(metric) {
             const ctx = document.getElementById('monthlyChart').getContext('2d');
@@ -815,24 +343,17 @@
                 data: {
                     labels: meses,
                     datasets: [
-                        { label: '2024', data: dbData[metric][2024], borderColor: colors[2024].border, backgroundColor: colors[2024].bg, tension: 0.4, fill: true, pointRadius: 3 },
-                        { label: '2025', data: dbData[metric][2025], borderColor: colors[2025].border, backgroundColor: colors[2025].bg, tension: 0.4, fill: true, pointRadius: 3 },
-                        { label: '2026', data: dbData[metric][2026], borderColor: colors[2026].border, backgroundColor: colors[2026].bg, tension: 0.4, fill: true, borderWidth: 3, pointRadius: 4 }
+                        { label: '2024', data: db[metric][2024], borderColor: colors[2024], tension: 0.4 },
+                        { label: '2025', data: db[metric][2025], borderColor: colors[2025], tension: 0.4 },
+                        { label: '2026', data: db[metric][2026], borderColor: colors[2026], tension: 0.4, borderWidth: 3 }
                     ]
                 },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toLocaleString()} €` } }, legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } } },
-                    scales: { y: { beginAtZero: true, grid: { borderDash: [5, 5] }, ticks: { font: { size: 10 } } }, x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
             });
         }
 
         function changeMainMetric() {
-            const val = document.getElementById('metricSelector').value;
-            initMonthlyChart(val);
-            updateCharts();
+            initMonthlyChart(document.getElementById('metricSelector').value);
         }
 
         function initDistributionChart() {
@@ -841,26 +362,15 @@
                 type: 'doughnut',
                 data: {
                     labels: ['Arcas', 'Flores', 'Sala', 'Agenciado', 'Carroza'],
-                    datasets: [{
-                        data: [21.5, 18.8, 14.7, 16.1, 6.0],
-                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'],
-                        borderWidth: 0, hoverOffset: 6
-                    }]
+                    datasets: [{ data: [21.5, 18.8, 14.7, 16.1, 6.0], backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'] }]
                 },
-                options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '65%',
-                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom' } } }
             });
         }
 
         function initQuarterChart(metric) {
             const ctx = document.getElementById('quarterChart').getContext('2d');
-            const calcTrimestres = (ano) => {
-                const arr = dbData[metric][ano];
-                return [arr[0]+arr[1]+arr[2], arr[3]+arr[4]+arr[5], arr[6]+arr[7]+arr[8]];
-            };
-
+            const calcTrimestres = (ano) => { const arr = db[metric][ano]; return [arr[0]+arr[1]+arr[2], arr[3]+arr[4]+arr[5], arr[6]+arr[7]+arr[8]]; };
             if(quarterChart) quarterChart.destroy();
             quarterChart = new Chart(ctx, {
                 type: 'bar',
@@ -872,41 +382,18 @@
                         { label: '2026', data: calcTrimestres(2026), backgroundColor: '#3b82f6' }
                     ]
                 },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } }, tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toLocaleString()} €` } } },
-                    scales: { y: { beginAtZero: true, grid: { borderDash: [3, 3] }, ticks: { font: { size: 10 } } }, x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false }
             });
         }
 
-        function updateQuarterChart() {
-            const val = document.getElementById('quarterMetricSelector').value;
-            initQuarterChart(val);
-        }
+        function updateQuarterChart() { initQuarterChart(document.getElementById('quarterMetricSelector').value); }
 
         function initTicketChart() {
             const ctx = document.getElementById('ticketChart').getContext('2d');
             ticketChart = new Chart(ctx, {
                 type: 'line',
-                data: {
-                    labels: ['2022', '2023', '2024', '2025', '2026'],
-                    datasets: [{
-                        label: 'Ticket Medio (€)',
-                        data: [2766, 2623, 2704, 3008, 3176],
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `Ticket: ${ctx.raw.toLocaleString()} €` } } },
-                    scales: { y: { beginAtZero: false, min: 2400, ticks: { font: { size: 10 } } }, x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
-                }
+                data: { labels: ['2022', '2023', '2024', '2025', '2026'], datasets: [{ data: [2766, 2623, 2704, 3008, 3176], borderColor: '#10b981', fill: true, backgroundColor: 'rgba(16,185,129,0.1)' }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
         }
 
@@ -914,21 +401,8 @@
             const ctx = document.getElementById('marginBarChart').getContext('2d');
             marginBarChart = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: ['Arcas', 'Flores', 'Agenciado', 'Sala', 'Cargadores', 'Vestir'],
-                    datasets: [{
-                        label: 'Margen Relativo (%)',
-                        data: [28.5, 24.0, 20.5, 18.2, 12.0, 8.5],
-                        backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899', '#64748b'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { x: { beginAtZero: true, grid: { borderDash: [3, 3] }, ticks: { font: { size: 10 } } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } }
-                }
+                data: { labels: ['Arcas', 'Flores', 'Agenciado', 'Sala', 'Cargadores'], datasets: [{ data: [28.5, 24.0, 20.5, 18.2, 12.0], backgroundColor: '#3b82f6' }] },
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
         }
 
@@ -936,290 +410,57 @@
             const ctx = document.getElementById('trend2027Chart').getContext('2d');
             trend2027Chart = new Chart(ctx, {
                 type: 'line',
-                data: {
-                    labels: ['2022', '2023', '2024', '2025', '2026', '2027 (Est)'],
-                    datasets: [
-                        { label: 'Asegurados', data: [286, 278, 301, 292, 256, 249], borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', tension: 0.3, borderWidth: 2, fill: true, pointRadius: 3 },
-                        { label: 'Particulares', data: [55, 39, 46, 37, 50, 46], borderColor: '#10b981', tension: 0.3, borderWidth: 2, pointRadius: 3 },
-                        { label: 'Alquileres', data: [61, 89, 82, 57, 73, 86], borderColor: '#f59e0b', tension: 0.3, borderWidth: 2, pointRadius: 3 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } } },
-                    scales: { y: { beginAtZero: true, grid: { borderDash: [3, 3] }, ticks: { font: { size: 10 } } }, x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
-                }
+                data: { labels: ['22', '23', '24', '25', '26', '27(Est)'], datasets: [{ label: 'Asegurados', data: [286, 278, 301, 292, 256, 249], borderColor: '#ef4444' }, { label: 'Particulares', data: [55, 39, 46, 37, 50, 46], borderColor: '#10b981' }] },
+                options: { responsive: true, maintainAspectRatio: false }
             });
         }
 
         function initScatterChart() {
             const ctx = document.getElementById('scatterChart').getContext('2d');
-            if(scatterChart) scatterChart.destroy();
-            
             scatterChart = new Chart(ctx, {
                 type: 'bubble',
-                data: {
-                    datasets: [{
-                        label: 'Evolución Anual',
-                        data: [
-                            { x: 1.0, y: -4.2, r: 8, label: 'Año 2023' },
-                            { x: 5.7, y: 8.9, r: 12, label: 'Año 2024' },
-                            { x: -10.0, y: 0.1, r: 12, label: 'Año 2025' },
-                            { x: -1.8, y: 3.7, r: 16, label: 'Año 2026' }
-                        ],
-                        backgroundColor: [
-                            'rgba(148, 163, 184, 0.7)',
-                            'rgba(16, 185, 129, 0.7)',
-                            'rgba(245, 158, 11, 0.7)',
-                            'rgba(59, 130, 246, 0.8)'
-                        ],
-                        borderColor: ['#64748b', '#059669', '#d97706', '#1d4ed8'], 
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { display: false }, 
-                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw.label}: Vol ${ctx.raw.x}%, Ing ${ctx.raw.y}%` } } 
-                    },
-                    scales: {
-                        x: { 
-                            title: { display: true, text: 'Var. Volumen (%)', font: { size: 10 } },
-                            min: -13, max: 8, ticks: { font: { size: 9 } },
-                            grid: { color: (ctx) => ctx.tick.value === 0 ? '#0f172a' : '#e2e8f0', lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1 }
-                        },
-                        y: { 
-                            title: { display: true, text: 'Var. Facturación (%)', font: { size: 10 } },
-                            min: -7, max: 12, ticks: { font: { size: 9 } },
-                            grid: { color: (ctx) => ctx.tick.value === 0 ? '#0f172a' : '#e2e8f0', lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1 }
-                        }
-                    }
-                }
+                data: { datasets: [{ data: [{x: 1, y: -4, r: 10}, {x: 5, y: 8, r: 15}, {x: -10, y: 0, r: 15}, {x: -1, y: 3, r: 20}], backgroundColor: '#3b82f6' }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
-        }
-
-        function initRadarChart() {
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            radarChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Volumen', 'Facturación', 'Ticket Med.', 'Particulares', 'Margen Op.'],
-                    datasets: [
-                        { label: '2024', data: [82, 78, 75, 70, 80], backgroundColor: 'rgba(148, 163, 184, 0.2)', borderColor: '#94a3b8', borderWidth: 2, pointRadius: 2 },
-                        { label: '2025', data: [79, 82, 85, 65, 82], backgroundColor: 'rgba(245, 158, 11, 0.2)', borderColor: '#f59e0b', borderWidth: 2, pointRadius: 2 },
-                        { label: '2026', data: [80, 88, 95, 78, 90], backgroundColor: 'rgba(59, 130, 246, 0.3)', borderColor: '#3b82f6', borderWidth: 3, pointRadius: 3 }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } } },
-                    scales: {
-                        r: {
-                            angleLines: { color: '#e2e8f0' },
-                            grid: { color: '#e2e8f0' },
-                            suggestedMin: 50, suggestedMax: 100,
-                            ticks: { display: false }
-                        }
-                    }
-                }
-            });
-        }
-
-        function initStackedBarChart() {
-            const ctx = document.getElementById('stackedBarChart').getContext('2d');
-            stackedBarChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: meses,
-                    datasets: [
-                        { label: 'Arcas', data: dbData['ARCA'][2026], backgroundColor: '#3b82f6' },
-                        { label: 'Flores', data: dbData['FLORES'][2026], backgroundColor: '#10b981' },
-                        { label: 'Agenciado', data: dbData['AGENCIADO'][2026], backgroundColor: '#8b5cf6' },
-                        { label: 'Sala', data: dbData['SALA'][2026], backgroundColor: '#f59e0b' },
-                        { label: 'Cargadores', data: dbData['CARGADORES'][2026], backgroundColor: '#ec4899' },
-                        { label: 'Vestir', data: dbData['VESTIR'][2026], backgroundColor: '#64748b' }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } },
-                        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toLocaleString()} €` } },
-                        datalabels: {
-                            anchor: 'end', align: 'top',
-                            formatter: (value, context) => {
-                                if (context.datasetIndex === context.chart.data.datasets.length - 1) {
-                                    let sum = 0;
-                                    context.chart.data.datasets.forEach(dataset => { sum += dataset.data[context.dataIndex]; });
-                                    return Math.round(sum / 1000) + 'k €';
-                                }
-                                return '';
-                            },
-                            font: { weight: 'bold', size: 9 },
-                            color: '#1e293b'
-                        }
-                    },
-                    scales: {
-                        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 9 } } },
-                        y: { stacked: true, beginAtZero: true, grid: { borderDash: [3, 3] }, suggestedMax: 140000, ticks: { font: { size: 9 } } }
-                    }
-                },
-                plugins: [ChartDataLabels]
-            });
-        }
-
-        function initPolarAreaChart() {
-            const ctx = document.getElementById('polarAreaChart').getContext('2d');
-            polarAreaChart = new Chart(ctx, {
-                type: 'polarArea',
-                data: {
-                    labels: ['Arcas', 'Flores', 'Agenciado', 'Sala', 'Cargadores', 'Vestir'],
-                    datasets: [{
-                        label: 'Ingresos 2026 (€)',
-                        data: [254479, 222123, 190412, 173512, 74900, 64512],
-                        backgroundColor: [
-                            'rgba(59, 130, 246, 0.7)',
-                            'rgba(16, 185, 129, 0.7)',
-                            'rgba(139, 92, 246, 0.7)',
-                            'rgba(245, 158, 11, 0.7)',
-                            'rgba(236, 72, 153, 0.7)',
-                            'rgba(100, 116, 139, 0.7)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } },
-                        tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw.toLocaleString()} €` } }
-                    },
-                    scales: { r: { grid: { color: '#e2e8f0' }, ticks: { display: false } } }
-                }
-            });
-        }
-
-        function initMultiYearChart() {
-            const ctx = document.getElementById('multiYearChart').getContext('2d');
-            multiYearChart = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: multiYearData.labels, datasets: multiYearData.datasets },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { display: false },
-                        tooltip: { callbacks: { label: (ctx) => `Facturación: ${ctx.raw.toLocaleString()} €` } },
-                        datalabels: {
-                            anchor: 'end', align: 'top',
-                            formatter: (value) => Math.round(value / 1000) + 'k €',
-                            font: { weight: 'bold', size: 10 },
-                            color: '#1e293b'
-                        }
-                    },
-                    scales: {
-                        y: { beginAtZero: false, min: 1000000, grid: { borderDash: [3, 3] }, ticks: { font: { size: 10 } } },
-                        x: { grid: { display: false }, ticks: { font: { size: 10 } } }
-                    }
-                },
-                plugins: [ChartDataLabels]
-            });
-        }
-
-        function initEsquelasChart() {
-            const ctx = document.getElementById('esquelasDynamicChart').getContext('2d');
-            const datasets = esquelasDatasetsRaw.map(item => ({
-                label: item.label, data: item.data, backgroundColor: item.color, borderColor: item.color, borderWidth: 1
-            }));
-
-            esquelasDynamicChart = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: esquelasYears, datasets: datasets },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { display: false },
-                        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toLocaleString()} esquelas` } }
-                    },
-                    scales: {
-                        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 9 } } },
-                        y: { stacked: true, beginAtZero: true, grid: { borderDash: [3, 3] }, ticks: { font: { size: 9 } } }
-                    }
-                }
-            });
-        }
-
-        function updateEsquelasChart() {
-            const checkboxes = document.querySelectorAll('.esq-chk');
-            checkboxes.forEach((chk) => {
-                const index = parseInt(chk.value);
-                esquelasDynamicChart.data.datasets[index].hidden = !chk.checked;
-            });
-            esquelasDynamicChart.update();
-        }
-
-        function toggleAllEsquelas(status) {
-            document.querySelectorAll('.esq-chk').forEach(chk => chk.checked = status);
-            updateEsquelasChart();
-        }
-
-        function toggleRadarModal(type) {
-            if (type === 'calc') document.getElementById('radarCalcModal').classList.toggle('hidden');
-            else if (type === 'guide') document.getElementById('radarGuideModal').classList.toggle('hidden');
-        }
-
-        function toggleMultiYearModal(type) {
-            if (type === 'calc') document.getElementById('multiYearCalcModal').classList.toggle('hidden');
-            else if (type === 'guide') document.getElementById('multiYearGuideModal').classList.toggle('hidden');
         }
 
         function inicializarTablaSimulador() {
             const tbody = document.getElementById('tablaTarifasSimulador');
             tbody.innerHTML = '';
             tarifasOficiales2021.forEach((item, index) => {
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 transition';
-                tr.innerHTML = `
-                    <td class="px-3 py-2 font-medium text-slate-800">${item.concepto}</td>
-                    <td class="px-3 py-2 text-right text-slate-500">${item.precio.toFixed(2)} €</td>
-                    <td class="px-3 py-2 text-center">
-                        <input type="number" step="0.01" value="${item.precio}" id="tarifaInput_${index}" oninput="calcularSimuladorOficial()" class="w-24 bg-slate-50 border border-slate-300 rounded p-1.5 text-right text-xs font-semibold text-slate-800 outline-none focus:border-blue-500">
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                tbody.innerHTML += `<tr><td class="px-3 py-1.5">${item.concepto}</td><td class="px-3 py-1.5 text-right">${item.precio}€</td><td class="px-3 py-1.5 text-center"><input type="number" value="${item.precio}" id="tarifaInput_${index}" oninput="calcularSimuladorOficial()" class="w-20 bg-slate-50 border border-slate-300 rounded p-1 text-right text-xs"></td></tr>`;
             });
         }
 
         function calcularSimuladorFinanciero() {
-            const servicios = parseFloat(document.getElementById('simServicios').value) || 0;
-            const ticketMedio = parseFloat(document.getElementById('simTicketMedio').value) || 0;
-            const total = servicios * ticketMedio;
+            const total = (parseFloat(document.getElementById('simServicios').value) || 0) * (parseFloat(document.getElementById('simTicketMedio').value) || 0);
             document.getElementById('resSimFacturacion').innerText = Math.round(total).toLocaleString() + ' €';
         }
 
         function calcularSimuladorOficial() {
-            const numServicios = parseFloat(document.getElementById('inputNumServicios').value) || 0;
-            let sumaPreciosModificados = 0;
-            tarifasOficiales2021.forEach((item, index) => {
-                const val = parseFloat(document.getElementById(`tarifaInput_${index}`).value) || 0;
-                sumaPreciosModificados += val;
-            });
-            const facturacionTotal = numServicios * sumaPreciosModificados;
-            document.getElementById('resSimTarifaTotal').innerText = Math.round(facturacionTotal).toLocaleString() + ' €';
+            let suma = 0;
+            tarifasOficiales2021.forEach((_, i) => suma += parseFloat(document.getElementById(`tarifaInput_${i}`).value) || 0);
+            const total = (parseFloat(document.getElementById('inputNumServicios').value) || 0) * suma;
+            document.getElementById('resSimTarifaTotal').innerText = Math.round(total).toLocaleString() + ' €';
         }
 
-        function toggleHelpModal() { document.getElementById('helpModal').classList.toggle('hidden'); }
-        function toggleMarginHelpModal() { document.getElementById('marginHelpModal').classList.toggle('hidden'); }
+        function guardarComoArchivo() {
+            const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Dashboard_PfCondado_Modificado.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
 
         function updateCharts() {
-            const show2024 = document.getElementById('toggle2024').checked;
-            const show2025 = document.getElementById('toggle2025').checked;
-            const show2026 = document.getElementById('toggle2026').checked;
-
             if(monthlyChart) {
-                monthlyChart.data.datasets[0].hidden = !show2024;
-                monthlyChart.data.datasets[1].hidden = !show2025;
-                monthlyChart.data.datasets[2].hidden = !show2026;
+                monthlyChart.data.datasets[0].hidden = !document.getElementById('toggle2024').checked;
+                monthlyChart.data.datasets[1].hidden = !document.getElementById('toggle2025').checked;
+                monthlyChart.data.datasets[2].hidden = !document.getElementById('toggle2026').checked;
                 monthlyChart.update();
             }
         }
