@@ -430,12 +430,12 @@
             </div>
         </div>
 
-        <!-- SECCIÓN 9: COMPARATIVA PLURIANUAL DE FACTURACIÓN -->
+        <!-- SECCIÓN 9: COMPARATIVA PLURIANUAL DE FACTURACIÓN (HASTA SEPTIEMBRE / T3) -->
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Comparativa Plurianual de Facturación Anual (2022 - 2026)</h2>
-                    <p class="text-sm text-slate-500 mt-0.5">Evolución real del volumen de ingresos totales consolidados por año (2026 con cierre parcial a Septiembre).</p>
+                    <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Comparativa Plurianual de Facturación Acumulada a Septiembre (T3: 2022 - 2026)</h2>
+                    <p class="text-sm text-slate-500 mt-0.5">Evolución real de los ingresos totales consolidados hasta septiembre (T3) de cada año según los conceptos propios.</p>
                 </div>
             </div>
             <div class="chart-container" style="height: 380px;">
@@ -573,8 +573,8 @@
                         <button onclick="enviarPreguntaPredefinida('Tendencias del sector funerario en España')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition flex items-center space-x-2 shadow">
                             <i class="fa-solid fa-building text-emerald-400"></i><span>Sector Funerario</span>
                         </button>
-                        <button onclick="enviarPreguntaPredefinida('1250000 / 381')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition flex items-center space-x-2 shadow">
-                            <i class="fa-solid fa-calculator text-amber-400"></i><span>Cálculo: 1250000 / 381</span>
+                        <button onclick="enviarPreguntaPredefinida('1204073 / 381')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition flex items-center space-x-2 shadow">
+                            <i class="fa-solid fa-calculator text-amber-400"></i><span>Cálculo: 1204073 / 381</span>
                         </button>
                         <button onclick="enviarPreguntaPredefinida('Estrategias de fidelización de clientes')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition flex items-center space-x-2 shadow">
                             <i class="fa-solid fa-users text-purple-400"></i><span>Fidelización de Clientes</span>
@@ -744,11 +744,12 @@
             }
         };
 
+        // Datos plurianuales actualizados con el cierre a septiembre (T3) de cada año según los conceptos propios
         const multiYearData = {
-            labels: ['2022', '2023', '2024', '2025', '2026 (Cierre Sep)'],
+            labels: ['2022 (Cierre Sep)', '2023 (Cierre Sep)', '2024 (Cierre Sep)', '2025 (Cierre Sep)', '2026 (Cierre Sep)'],
             datasets: [{
-                label: 'Facturación Global Anual (€)',
-                data: [1152000, 1184000, 1243000, 1161217, 1204073],
+                label: 'Facturación Acumulada a Sep (€)',
+                data: [1112017, 1065050, 1160241, 1161217, 1204073],
                 backgroundColor: ['#94a3b8', '#f59e0b', '#10b981', '#8b5cf6', '#3b82f6'],
                 borderWidth: 0,
                 borderRadius: 8
@@ -1324,7 +1325,7 @@
                     responsive: true, maintainAspectRatio: false,
                     plugins: { 
                         legend: { display: false },
-                        tooltip: { callbacks: { label: (ctx) => `Facturación: ${ctx.raw.toLocaleString()} €` } },
+                        tooltip: { callbacks: { label: (ctx) => `Facturación Acumulada a Sep: ${ctx.raw.toLocaleString()} €` } },
                         datalabels: {
                             anchor: 'end',
                             align: 'top',
