@@ -136,19 +136,6 @@
             <p class="text-slate-500 mt-1">Selección de indicadores clave estructurados para maximizar su visualización y acompañados de análisis de contexto.</p>
         </div>
 
-        <!-- Banner Destacado 365 Servicios -->
-        <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-8 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center fade-in border border-blue-500/30">
-            <div class="space-y-2 text-center md:text-left mb-4 md:mb-0">
-                <span class="bg-blue-500/30 text-blue-300 text-xs font-bold px-3 py-1 rounded-full border border-blue-400/30 uppercase tracking-widest">Proyección Oficial A Cierre Septiembre 2027</span>
-                <h2 class="text-3xl lg:text-5xl font-black tracking-tight mt-2 text-white">365</h2>
-                <p class="text-slate-300 text-sm max-w-xl">Estimación de servicios totales acumulados a cierre de septiembre de 2027.</p>
-            </div>
-            <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20 text-center min-w-[200px]">
-                <p class="text-xs text-slate-300 uppercase font-bold tracking-wider">Objetivo Clave</p>
-                <p class="text-3xl font-black text-emerald-400 mt-1">365</p>
-            </div>
-        </div>
-
         <!-- 0. Comparativa Plurianual de Facturación Acumulada a Septiembre -->
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="pres-card-multiyear">
             <button onclick="toggleFullscreenCard('pres-card-multiyear')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
@@ -267,17 +254,28 @@
             </div>
         </div>
 
-        <!-- Fila 4: Estimación y Tendencia 2027 -->
+        <!-- Fila 4: Estimación y Tendencia 2027 (Aquí se muestra en grande 365 servicios a cierre de septiembre) -->
         <div class="fade-in">
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="pres-card-trend">
                 <button onclick="toggleFullscreenCard('pres-card-trend')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
-                <div class="mb-6 pr-12">
-                    <div class="flex items-center space-x-3 mb-1">
-                        <h2 class="text-2xl font-bold text-slate-800">Estimación y Tendencia Comercial 2027</h2>
-                        <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1.5 rounded-full">Proyección Cierre Septiembre 2027: 365 Servicios</span>
+                
+                <!-- Banner destacado grande de 365 servicios a cierre de septiembre -->
+                <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center mb-6 border border-blue-500/30">
+                    <div class="space-y-1 text-center md:text-left mb-4 md:mb-0">
+                        <span class="bg-blue-500/30 text-blue-300 text-xs font-bold px-3 py-1 rounded-full border border-blue-400/30 uppercase tracking-widest">Proyección Oficial Cierre Septiembre 2027</span>
+                        <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight mt-2 text-white">Estimación: <span class="text-emerald-400 underline decoration-emerald-500/50">365 Servicios</span></h2>
+                        <p class="text-slate-300 text-sm max-w-xl">Volumen total proyectado acumulado a cierre de septiembre de 2027.</p>
                     </div>
+                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center min-w-[180px]">
+                        <p class="text-xs text-slate-300 uppercase font-bold">Acumulado Sept 2027</p>
+                        <p class="text-2xl font-black text-emerald-400 mt-0.5">365 Servicios</p>
+                    </div>
+                </div>
+
+                <div class="mb-6 pr-12">
+                    <h2 class="text-2xl font-bold text-slate-800">Estimación y Tendencia Comercial 2027</h2>
                     <p class="text-sm text-slate-500">Comportamiento esperado y consolidación de canales para el escenario central de 365 servicios a cierre de septiembre.</p>
                 </div>
                 
@@ -508,6 +506,63 @@
             </div>
         </div>
 
+        <!-- Fila 9: Análisis Financiero & Posición en el Sector SABI (Añadido a Presentación) -->
+        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="pres-card-sabi">
+            <button onclick="toggleFullscreenCard('pres-card-sabi')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+            </button>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-building-columns text-blue-600 mr-2"></i> Análisis Financiero & Posición en el Sector SABI: Pompas Fúnebres del Condado, S.L.</h2>
+                    <p class="text-sm text-slate-500 mt-0.5">Estudio oficial extraído de la base de datos SABI: Posicionamiento competitivo frente al mercado gallego y español.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl border border-blue-200">
+                    <p class="text-xs font-bold uppercase text-blue-600">Ranking en Galicia</p>
+                    <h3 class="text-3xl font-extrabold text-slate-900 mt-1">#9 <span class="text-sm font-normal text-slate-500">de 174</span></h3>
+                    <p class="text-xs text-blue-700 font-medium mt-2"><i class="fa-solid fa-award mr-1"></i> Percentil 94,8% (Top Galicia)</p>
+                </div>
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 p-5 rounded-2xl border border-emerald-200">
+                    <p class="text-xs font-bold uppercase text-emerald-600">vs Empresa Típica Gallega</p>
+                    <h3 class="text-3xl font-extrabold text-slate-900 mt-1">7,8x <span class="text-sm font-normal text-slate-500">Mediana</span></h3>
+                    <p class="text-xs text-emerald-700 font-medium mt-2"><i class="fa-solid fa-arrow-trend-up mr-1"></i> 1,93M€ vs 245,7k€ Mediana</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-5 rounded-2xl border border-purple-200">
+                    <p class="text-xs font-bold uppercase text-purple-600">Ranking en España</p>
+                    <h3 class="text-3xl font-extrabold text-slate-900 mt-1">#121 <span class="text-sm font-normal text-slate-500">de 1.036</span></h3>
+                    <p class="text-xs text-purple-700 font-medium mt-2"><i class="fa-solid fa-globe mr-1"></i> Percentil 88,1% (Top España)</p>
+                </div>
+                <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-5 rounded-2xl border border-amber-200">
+                    <p class="text-xs font-bold uppercase text-amber-600">vs Media de Galicia</p>
+                    <h3 class="text-3xl font-extrabold text-slate-900 mt-1">+278%</h3>
+                    <p class="text-xs text-amber-700 font-medium mt-2"><i class="fa-solid fa-chart-line mr-1"></i> Media sectorial: 509.944 €</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-chart-area text-blue-600 mr-2"></i> Evolución Histórica de Facturación (SABI 2010 - 2024)</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4">Crecimiento sostenido de los ingresos de explotación de Pompas Fúnebres del Condado, S.L.</p>
+                    </div>
+                    <div class="chart-container" style="height: 320px;">
+                        <canvas id="sabiHistoryChartPres"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-scale-balanced text-indigo-600 mr-2"></i> Benchmarking: P.F. del Condado vs Entorno (SABI)</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4">Comparativa directa con las medianas, medias y umbrales de Galicia y España.</p>
+                    </div>
+                    <div class="chart-container" style="height: 320px;">
+                        <canvas id="sabiBenchmarkChartPres"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -535,19 +590,6 @@
                     <span>2026</span>
                     <label class="switch"><input type="checkbox" id="toggle2026" checked onchange="updateCharts()"><span class="slider"></span></label>
                 </label>
-            </div>
-        </div>
-
-        <!-- Banner Destacado 365 Servicios Admin -->
-        <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-8 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center fade-in border border-blue-500/30">
-            <div class="space-y-2 text-center md:text-left mb-4 md:mb-0">
-                <span class="bg-blue-500/30 text-blue-300 text-xs font-bold px-3 py-1 rounded-full border border-blue-400/30 uppercase tracking-widest">Proyección Oficial A Cierre Septiembre 2027</span>
-                <h2 class="text-3xl lg:text-5xl font-black tracking-tight mt-2 text-white">365</h2>
-                <p class="text-slate-300 text-sm max-w-xl">Estimación de servicios totales acumulados a cierre de septiembre de 2027.</p>
-            </div>
-            <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20 text-center min-w-[200px]">
-                <p class="text-xs text-slate-300 uppercase font-bold tracking-wider">Objetivo Clave</p>
-                <p class="text-3xl font-black text-emerald-400 mt-1">365</p>
             </div>
         </div>
 
@@ -587,8 +629,11 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 fade-in">
-            <div class="glass-panel p-8 rounded-2xl lg:col-span-2 flex flex-col justify-between">
-                <div class="flex justify-between items-center mb-6">
+            <div class="glass-panel p-8 rounded-2xl lg:col-span-2 flex flex-col justify-between relative transition-all duration-300" id="admin-card-monthly">
+                <button onclick="toggleFullscreenCard('admin-card-monthly')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                    <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+                </button>
+                <div class="flex justify-between items-center mb-6 pr-12">
                     <h2 class="text-2xl font-bold text-slate-800">Evolución Comparativa Mensual (Ene - Sep)</h2>
                     <select id="metricSelector" class="bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 shadow-sm" onchange="changeMainMetric('admin')">
                         <option value="ARCA">Arcas</option>
@@ -604,8 +649,11 @@
                 </div>
             </div>
 
-            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
-                <h2 class="text-2xl font-bold text-slate-800 mb-6">Distribución del Ingreso (2026)</h2>
+            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-dist">
+                <button onclick="toggleFullscreenCard('admin-card-dist')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                    <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+                </button>
+                <h2 class="text-2xl font-bold text-slate-800 mb-6 pr-12">Distribución del Ingreso (2026)</h2>
                 <div class="chart-container" style="height: 340px;">
                     <canvas id="distributionChart"></canvas>
                 </div>
@@ -613,8 +661,11 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
-            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
-                <div class="flex justify-between items-center mb-6">
+            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-quarter">
+                <button onclick="toggleFullscreenCard('admin-card-quarter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                    <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+                </button>
+                <div class="flex justify-between items-center mb-6 pr-12">
                     <div>
                         <h2 class="text-2xl font-bold text-slate-800">Rendimiento por Trimestres</h2>
                         <p class="text-sm text-slate-500 mt-0.5">Comparativa T1, T2 y T3</p>
@@ -631,8 +682,11 @@
                 </div>
             </div>
 
-            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
-                <div>
+            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-ticket">
+                <button onclick="toggleFullscreenCard('admin-card-ticket')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                    <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+                </button>
+                <div class="pr-12">
                     <h2 class="text-2xl font-bold text-slate-800">Evolución del Ticket Medio (€ / Servicio)</h2>
                     <p class="text-sm text-slate-500 mt-0.5">Crecimiento real del valor por servicio (2022 - 2026)</p>
                 </div>
@@ -716,7 +770,24 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
-            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
+            <!-- Banner grande de 365 servicios a cierre de septiembre ubicado junto al gráfico de tendencia -->
+            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-trend">
+                <button onclick="toggleFullscreenCard('admin-card-trend')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                    <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+                </button>
+                
+                <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center mb-6 border border-blue-500/30 pr-12">
+                    <div class="space-y-1 text-center md:text-left mb-4 md:mb-0">
+                        <span class="bg-blue-500/30 text-blue-300 text-xs font-bold px-3 py-1 rounded-full border border-blue-400/30 uppercase tracking-widest">Proyección Oficial Cierre Septiembre 2027</span>
+                        <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight mt-2 text-white">Estimación: <span class="text-emerald-400 underline decoration-emerald-500/50">365 Servicios</span></h2>
+                        <p class="text-slate-300 text-sm max-w-xl">Volumen total proyectado acumulado a cierre de septiembre de 2027.</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center min-w-[180px]">
+                        <p class="text-xs text-slate-300 uppercase font-bold">Acumulado Sept 2027</p>
+                        <p class="text-2xl font-black text-emerald-400 mt-0.5">365 Servicios</p>
+                    </div>
+                </div>
+
                 <div>
                     <div class="flex justify-between items-center mb-2">
                         <h2 class="text-2xl font-bold text-slate-800">Estimación y Tendencia 2027</h2>
@@ -729,8 +800,11 @@
                 </div>
             </div>
 
-            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
-                <div>
+            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-margin">
+                <button onclick="toggleFullscreenCard('admin-card-margin')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                    <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+                </button>
+                <div class="pr-12">
                     <div class="flex justify-between items-center mb-1">
                         <h2 class="text-2xl font-bold text-slate-800">Rentabilidad por Partida</h2>
                         <button onclick="toggleMarginHelpModal()" class="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 px-4 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1 shadow-sm">
@@ -758,8 +832,11 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
-            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between">
-                <div>
+            <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-scatter">
+                <button onclick="toggleFullscreenCard('admin-card-scatter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                    <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+                </button>
+                <div class="pr-12">
                     <div class="flex justify-between items-center mb-1">
                         <h2 class="text-2xl font-bold text-slate-800">Matriz de Rentabilidad Estratégica</h2>
                         <button onclick="toggleHelpModal()" class="bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200 px-4 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1 shadow-sm">
@@ -830,8 +907,11 @@
             </div>
         </div>
 
-        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
+        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-radar">
+            <button onclick="toggleFullscreenCard('admin-card-radar')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+            </button>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-chart-pie text-blue-600 mr-2"></i> Evaluación Multidimensional de Rendimiento (Radar Estratégico)</h2>
                     <p class="text-sm text-slate-500 mt-0.5">Comparativa global basada exclusivamente en datos reales: Volumen, Facturación, Ticket Medio, Peso de Particulares y Margen Operativo.</p>
@@ -842,8 +922,11 @@
             </div>
         </div>
 
-        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
+        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-stacked">
+            <button onclick="toggleFullscreenCard('admin-card-stacked')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+            </button>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-layer-group text-blue-600 mr-2"></i> Composición Departamental Mensual (Año 2026)</h2>
                     <p class="text-sm text-slate-500 mt-0.5">Gráfico de barras apiladas con totales mensuales reflejados en la parte superior de cada barra.</p>
@@ -855,8 +938,11 @@
             </div>
         </div>
 
-        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
+        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-polar">
+            <button onclick="toggleFullscreenCard('admin-card-polar')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+            </button>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-compass-drafting text-purple-600 mr-2"></i> Distribución Proporcional Interactiva (Área Polar de Ingresos)</h2>
                     <p class="text-sm text-slate-500 mt-0.5">Gráfico interactivo de área polar que contrasta visualmente el peso relativo de cada partida de negocio (2026).</p>
@@ -868,8 +954,11 @@
             </div>
         </div>
 
-        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
+        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-multiyear">
+            <button onclick="toggleFullscreenCard('admin-card-multiyear')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+            </button>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Comparativa Plurianual de Facturación Acumulada a Septiembre (T3: 2022 - 2026)</h2>
                     <p class="text-sm text-slate-500 mt-0.5">Evolución real de los ingresos totales consolidados hasta septiembre (T3) de cada año según los conceptos propios.</p>
@@ -880,8 +969,11 @@
             </div>
         </div>
 
-        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
+        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-esquelas">
+            <button onclick="toggleFullscreenCard('admin-card-esquelas')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+            </button>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-filter text-emerald-600 mr-2"></i> Análisis Dinámico de Esquelas Atlántico por Funerarias / Localidades (2022 - 2026)</h2>
                     <p class="text-sm text-slate-500 mt-0.5">Filtro interactivo lateral: marca o desmarca las funerarias para aislar o combinar su impacto anual real.</p>
@@ -911,8 +1003,11 @@
             </div>
         </div>
 
-        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
+        <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-sabi">
+            <button onclick="toggleFullscreenCard('admin-card-sabi')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
+            </button>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-building-columns text-blue-600 mr-2"></i> Análisis Financiero & Posición en el Sector SABI: Pompas Fúnebres del Condado, S.L.</h2>
                     <p class="text-sm text-slate-500 mt-0.5">Estudio oficial extraído de la base de datos SABI: Posicionamiento competitivo frente al mercado gallego y español.</p>
@@ -1020,7 +1115,7 @@
             </div>
         </div>
 
-        <!-- SECCIÓN 13: SIMULADOR DE PUNTO DE EQUILIBRIO & STRESS-TESTING (Actualizado a 365) -->
+        <!-- SECCIÓN 13: SIMULADOR DE PUNTO DE EQUILIBRIO & STRESS-TESTING -->
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
                 <div>
@@ -1127,6 +1222,8 @@
                     if (scatterChartPres) scatterChartPres.resize();
                     if (radarChartPres) radarChartPres.resize();
                     if (stackedBarChartPres) stackedBarChartPres.resize();
+                    if (sabiHistoryChartPres) sabiHistoryChartPres.resize();
+                    if (sabiBenchmarkChartPres) sabiBenchmarkChartPres.resize();
                 }, 50);
             }
         }
@@ -1154,6 +1251,8 @@
                 if (scatterChartPres) scatterChartPres.resize();
                 if (radarChartPres) radarChartPres.resize();
                 if (stackedBarChartPres) stackedBarChartPres.resize();
+                if (sabiHistoryChartPres) sabiHistoryChartPres.resize();
+                if (sabiBenchmarkChartPres) sabiBenchmarkChartPres.resize();
             }, 100);
         }
 
@@ -1229,7 +1328,7 @@
         ];
 
         let monthlyChart, distributionChart, scatterChart, trend2027Chart, quarterChart, ticketChart, marginBarChart, radarChart, stackedBarChart, polarAreaChart, multiYearChart, esquelasDynamicChart, sabiHistoryChart, sabiBenchmarkChart;
-        let monthlyChartPres, quarterChartPres, ticketChartPres, trend2027ChartPres, multiYearChartPres, marginBarChartPres, scatterChartPres, radarChartPres, stackedBarChartPres;
+        let monthlyChartPres, quarterChartPres, ticketChartPres, trend2027ChartPres, multiYearChartPres, marginBarChartPres, scatterChartPres, radarChartPres, stackedBarChartPres, sabiHistoryChartPres, sabiBenchmarkChartPres;
 
         const colors = {
             2024: { border: '#94a3b8', bg: 'rgba(148, 163, 184, 0.2)' },
@@ -1357,7 +1456,7 @@
             const margenUnitario = TM * (1 - CV_pct);
             const puntoEquilibrioServ = Math.ceil(CF / margenUnitario);
             const puntoEquilibrioEur = puntoEquilibrioServ * TM;
-            const serviciosBase = 365; // Ajustado a 365
+            const serviciosBase = 365;
             const margenSeguridad = ((serviciosBase - puntoEquilibrioServ) / serviciosBase) * 100;
             const ebitdaEstimado = (serviciosBase * margenUnitario) - CF;
 
@@ -1800,8 +1899,7 @@
         }
 
         function initSabiCharts() {
-            const ctx1 = document.getElementById('sabiHistoryChart').getContext('2d');
-            sabiHistoryChart = new Chart(ctx1, {
+            const historyConfig = {
                 type: 'line',
                 data: {
                     labels: ['2010', '2012', '2014', '2016', '2018', '2020', '2022', '2024'],
@@ -1818,10 +1916,9 @@
                     plugins: { legend: { display: false } },
                     scales: { y: { beginAtZero: false, min: 1000000 } }
                 }
-            });
+            };
 
-            const ctx2 = document.getElementById('sabiBenchmarkChart').getContext('2d');
-            sabiBenchmarkChart = new Chart(ctx2, {
+            const benchmarkConfig = {
                 type: 'bar',
                 data: {
                     labels: ['Mediana Galicia', 'Media Galicia', 'Mediana España', 'Umbral Top 10 Gal', 'Media España', 'P.F. del Condado'],
@@ -1831,7 +1928,19 @@
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
+            };
+
+            const ctx1 = document.getElementById('sabiHistoryChart').getContext('2d');
+            sabiHistoryChart = new Chart(ctx1, JSON.parse(JSON.stringify(historyConfig)));
+
+            const ctx1Pres = document.getElementById('sabiHistoryChartPres');
+            if(ctx1Pres) sabiHistoryChartPres = new Chart(ctx1Pres.getContext('2d'), JSON.parse(JSON.stringify(historyConfig)));
+
+            const ctx2 = document.getElementById('sabiBenchmarkChart').getContext('2d');
+            sabiBenchmarkChart = new Chart(ctx2, JSON.parse(JSON.stringify(benchmarkConfig)));
+
+            const ctx2Pres = document.getElementById('sabiBenchmarkChartPres');
+            if(ctx2Pres) sabiBenchmarkChartPres = new Chart(ctx2Pres.getContext('2d'), JSON.parse(JSON.stringify(benchmarkConfig)));
         }
 
         function updateEsquelasChart() {
