@@ -13,7 +13,7 @@
     <!-- FontAwesome para Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- jsPDF para exportar a PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; }
@@ -74,6 +74,7 @@
         .view-container { display: none; }
         .view-container.active { display: block; }
 
+        /* MODO PANTALLA COMPLETA ESTÁNDAR (Para las gráficas normales) */
         .fullscreen-active {
             position: fixed !important;
             top: 0 !important;
@@ -83,7 +84,7 @@
             z-index: 99999 !important;
             background: #f8fafc !important; 
             border-radius: 0 !important;
-            padding: 40px !important;
+            padding: 50px !important;
             margin: 0 !important;
             max-width: none !important;
             display: flex;
@@ -92,10 +93,47 @@
         }
         .fullscreen-active .chart-container {
             flex-grow: 1 !important;
-            height: auto !important;
-            min-height: 0 !important;
-            margin-top: 20px;
+            height: 65vh !important; 
+            min-height: 500px !important;
+            margin-top: 30px;
         }
+
+        /* MODO PANTALLA COMPLETA ESPECÍFICO PARA EL SIMULADOR DE TICKET (Proporcional y Estirado) */
+        #pres-card-sim-ticket.fullscreen-active {
+            padding: 3rem 4rem !important;
+            justify-content: space-between !important;
+        }
+        #pres-card-sim-ticket.fullscreen-active > div {
+            margin-bottom: 1.5rem !important;
+        }
+        #pres-card-sim-ticket.fullscreen-active > div:last-child {
+            margin-bottom: 0 !important;
+        }
+        
+        /* Flexbox para que las 3 cajas interiores rellenen toda la altura */
+        #pres-card-sim-ticket.fullscreen-active .space-y-4 {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+            justify-content: space-evenly !important;
+            gap: 1.5rem !important;
+        }
+        #pres-card-sim-ticket.fullscreen-active .space-y-4 > div {
+            margin: 0 !important;
+            padding: 1.5rem 2rem !important;
+        }
+        
+        /* Tipografía ampliada para el simulador */
+        #pres-card-sim-ticket.fullscreen-active h2 { font-size: 2.2rem !important; margin-bottom: 0.5rem !important; line-height: 1.3 !important; }
+        #pres-card-sim-ticket.fullscreen-active .text-\\[10px\\] { font-size: 0.95rem !important; line-height: 1.4 !important; }
+        #pres-card-sim-ticket.fullscreen-active .text-\\[11px\\] { font-size: 1.05rem !important; line-height: 1.4 !important; }
+        #pres-card-sim-ticket.fullscreen-active .text-xs { font-size: 1.15rem !important; line-height: 1.5 !important; }
+        #pres-card-sim-ticket.fullscreen-active .text-sm { font-size: 1.35rem !important; line-height: 1.5 !important; }
+        #pres-card-sim-ticket.fullscreen-active .text-base { font-size: 1.5rem !important; line-height: 1.5 !important; }
+        #pres-card-sim-ticket.fullscreen-active .text-lg { font-size: 1.7rem !important; }
+        #pres-card-sim-ticket.fullscreen-active .font-extrabold { font-size: 1.75rem !important; }
+        #pres-card-sim-ticket.fullscreen-active .mt-3 { margin-top: 1.5rem !important; }
+
     </style>
 </head>
 <body class="text-gray-800 antialiased pb-20">
@@ -127,7 +165,7 @@
     </div>
 
     <!-- ===================================================================== -->
-    <!-- CONTENEDOR VISTA: PRESENTACIÓN                                         -->
+    <!-- CONTENEDOR VISTA: PRESENTACIÓN                                        -->
     <!-- ===================================================================== -->
     <div id="view-presentation" class="view-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
@@ -136,9 +174,9 @@
             <p class="text-slate-500 mt-1">Selección de indicadores clave estructurados para maximizar su visualización y acompañados de análisis de contexto.</p>
         </div>
 
-        <!-- 0. Comparativa Plurianual de Facturación Acumulada a Septiembre -->
+        <!-- 0. Comparativa Plurianual -->
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="pres-card-multiyear">
-            <button onclick="toggleFullscreenCard('pres-card-multiyear')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('pres-card-multiyear')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -155,19 +193,24 @@
         <!-- Fila 1: Evolución Comparativa Mensual -->
         <div class="fade-in">
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="pres-card-monthly">
-                <button onclick="toggleFullscreenCard('pres-card-monthly')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('pres-card-monthly')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
-                <div class="flex justify-between items-center mb-6 pr-12">
+                <div class="flex justify-between items-center mb-6 pr-12 flex-wrap gap-4">
                     <h2 class="text-2xl font-bold text-slate-800">Evolución Comparativa Mensual (Ene - Sep)</h2>
-                    <select id="metricSelectorPres" class="bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 shadow-sm" onchange="changeMainMetric('pres')">
-                        <option value="ARCA">Arcas</option>
-                        <option value="FLORES">Flores</option>
-                        <option value="AGENCIADO">Agenciado</option>
-                        <option value="SALA">Sala de Velaciones</option>
-                        <option value="CARGADORES">Cargadores</option>
-                        <option value="VESTIR">Vestir / Amortajar</option>
-                    </select>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="simularLineasTendencia('pres')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center space-x-2">
+                            <i class="fa-solid fa-play"></i><span>Simular Tendencias Mes a Mes</span>
+                        </button>
+                        <select id="metricSelectorPres" class="bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 shadow-sm" onchange="changeMainMetric('pres')">
+                            <option value="ARCA">Arcas</option>
+                            <option value="FLORES">Flores</option>
+                            <option value="AGENCIADO">Agenciado</option>
+                            <option value="SALA">Sala de Velaciones</option>
+                            <option value="CARGADORES">Cargadores</option>
+                            <option value="VESTIR">Vestir / Amortajar</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <div class="chart-container" style="height: 480px !important;">
@@ -184,7 +227,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
             <!-- Rendimiento por Trimestres -->
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="pres-card-quarter">
-                <button onclick="toggleFullscreenCard('pres-card-quarter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('pres-card-quarter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="flex justify-between items-center mb-6 pr-12">
@@ -206,7 +249,7 @@
 
             <!-- Rentabilidad por Partida -->
             <div class="glass-panel p-8 rounded-2xl flex flex-col relative transition-all duration-300" id="pres-card-margin">
-                <button onclick="toggleFullscreenCard('pres-card-margin')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('pres-card-margin')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="mb-1 pr-12 flex justify-between items-center">
@@ -236,7 +279,7 @@
         <!-- Fila 3: Evolución del Ticket Medio -->
         <div class="fade-in">
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="pres-card-ticket">
-                <button onclick="toggleFullscreenCard('pres-card-ticket')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('pres-card-ticket')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="mb-6 pr-12">
@@ -254,14 +297,13 @@
             </div>
         </div>
 
-        <!-- Fila 4: Estimación y Tendencia 2027 (Aquí se muestra en grande 365 servicios a cierre de septiembre) -->
+        <!-- Fila 4: Estimación y Tendencia 2027 -->
         <div class="fade-in">
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="pres-card-trend">
-                <button onclick="toggleFullscreenCard('pres-card-trend')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('pres-card-trend')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 
-                <!-- Banner destacado grande de 365 servicios a cierre de septiembre -->
                 <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center mb-6 border border-blue-500/30">
                     <div class="space-y-1 text-center md:text-left mb-4 md:mb-0">
                         <span class="bg-blue-500/30 text-blue-300 text-xs font-bold px-3 py-1 rounded-full border border-blue-400/30 uppercase tracking-widest">Proyección Oficial Cierre Septiembre 2027</span>
@@ -292,7 +334,7 @@
         <!-- Fila 5: Matriz de Rentabilidad Estratégica -->
         <div class="fade-in">
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="pres-card-scatter">
-                <button onclick="toggleFullscreenCard('pres-card-scatter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('pres-card-scatter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div>
@@ -334,10 +376,8 @@
 
         <!-- Fila 6: Simulador de Ticket Medio Reestructurado a 365 -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
-            
-            <!-- SIMULACIÓN TICKET MEDIO (ANALIZANDO CAÍDAS HASTA 365) -->
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="pres-card-sim-ticket">
-                <button onclick="toggleFullscreenCard('pres-card-sim-ticket')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('pres-card-sim-ticket')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="mb-4 pr-12">
@@ -345,7 +385,6 @@
                     <p class="text-sm text-slate-500 mt-1">Cálculo exacto de la subida de ticket necesaria para absorber la pérdida de servicios respecto a 2024, 2025 y 2026 hacia el <strong>suelo estimado de 365 servicios a cierre de septiembre de 2027</strong>.</p>
                 </div>
 
-                <!-- Tarjeta Resumen de Datos de Origen Reales -->
                 <div class="bg-slate-900 text-white p-4 rounded-xl mb-5 space-y-2">
                     <p class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-database mr-1.5"></i> Datos Reales a Septiembre (T3):</p>
                     <div class="grid grid-cols-3 gap-2 text-center text-xs border-t border-slate-800 pt-2">
@@ -356,8 +395,6 @@
                 </div>
 
                 <div class="space-y-4 mb-6">
-                    
-                    <!-- CASO 1: Desde la referencia de 2024 -->
                     <div class="border border-blue-200 rounded-xl p-4 bg-blue-50/60 shadow-sm transition">
                         <div class="flex justify-between items-start">
                             <div>
@@ -372,7 +409,6 @@
                         </div>
                     </div>
 
-                    <!-- CASO 2: Desde la referencia de 2025 -->
                     <div class="border border-emerald-200 rounded-xl p-4 bg-emerald-50/60 shadow-sm transition">
                         <div class="flex justify-between items-start">
                             <div>
@@ -387,7 +423,6 @@
                         </div>
                     </div>
 
-                    <!-- CASO 3: Desde la referencia de 2026 -->
                     <div class="border border-amber-300 rounded-xl p-4 bg-amber-50/80 shadow-sm transition">
                         <div class="flex justify-between items-start">
                             <div>
@@ -409,20 +444,18 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="mt-auto bg-slate-900 p-4 rounded-xl text-white shadow-lg border-l-4 border-amber-400">
                     <p class="text-xs leading-relaxed font-light">
                         <strong class="text-amber-400"><i class="fa-solid fa-lightbulb mr-1"></i> Conclusión Directiva:</strong>
-                        Para no perder poder adquisitivo frente a los 386 servicios de 2025 con los 365 previstos a cierre de septiembre de 2027, se requiere un incremento del Ticket Medio de un <strong>+5,8%</strong> (hasta 3.359 €). Si el objetivo es recuperar la facturación récord de 2024 (1,36 M€) soportando una caída a 365 servicios, el Ticket Medio debe subir un <strong>+17,5%</strong> (hasta los 3.733 €).
+                        Para no perder poder adquisitivo frente a los 386 servicios de 2025 con los 365 previstos a cierre de septiembre de 2027, se requiere un incremento del Ticket Medio de un <strong>+5,8%</strong> (hasta 3.359 €). Si el objetivo es recuperar la facturación récord de 2024 soportando una caída a 365 servicios, el Ticket Medio debe subir un <strong>+17,5%</strong>.
                     </p>
                 </div>
             </div>
 
-            <!-- Simulador Fijo: Tarifa Detallada Base 365 -->
             <div class="glass-panel p-8 rounded-2xl flex flex-col relative transition-all duration-300" id="pres-card-sim-tarifa">
-                <button onclick="toggleFullscreenCard('pres-card-sim-tarifa')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('pres-card-sim-tarifa')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="mb-6 pr-12">
@@ -470,12 +503,11 @@
                     <div class="bg-amber-50 p-4 rounded-xl border border-amber-300 flex flex-col justify-center items-center shadow-inner"><p class="text-[10px] uppercase font-bold text-amber-700 mb-0.5">Global al +17,5%</p><p class="text-lg font-extrabold text-amber-600">898.391 €</p></div>
                 </div>
             </div>
-
         </div>
 
-        <!-- Fila 7: Evaluación Multidimensional de Rendimiento (Radar) -->
+        <!-- Fila 7: Radar -->
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="pres-card-radar">
-            <button onclick="toggleFullscreenCard('pres-card-radar')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('pres-card-radar')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -489,9 +521,9 @@
             </div>
         </div>
 
-        <!-- Fila 8: Composición Departamental Mensual (Barras Apiladas) -->
+        <!-- Fila 8: Barras Apiladas -->
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="pres-card-stacked">
-            <button onclick="toggleFullscreenCard('pres-card-stacked')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('pres-card-stacked')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -506,9 +538,9 @@
             </div>
         </div>
 
-        <!-- Fila 9: Análisis Financiero & Posición en el Sector SABI (Añadido a Presentación) -->
+        <!-- Fila 9: SABI -->
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="pres-card-sabi">
-            <button onclick="toggleFullscreenCard('pres-card-sabi')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('pres-card-sabi')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -630,19 +662,24 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 fade-in">
             <div class="glass-panel p-8 rounded-2xl lg:col-span-2 flex flex-col justify-between relative transition-all duration-300" id="admin-card-monthly">
-                <button onclick="toggleFullscreenCard('admin-card-monthly')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('admin-card-monthly')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
-                <div class="flex justify-between items-center mb-6 pr-12">
+                <div class="flex justify-between items-center mb-6 pr-12 flex-wrap gap-4">
                     <h2 class="text-2xl font-bold text-slate-800">Evolución Comparativa Mensual (Ene - Sep)</h2>
-                    <select id="metricSelector" class="bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 shadow-sm" onchange="changeMainMetric('admin')">
-                        <option value="ARCA">Arcas</option>
-                        <option value="FLORES">Flores</option>
-                        <option value="AGENCIADO">Agenciado</option>
-                        <option value="SALA">Sala de Velaciones</option>
-                        <option value="CARGADORES">Cargadores</option>
-                        <option value="VESTIR">Vestir / Amortajar</option>
-                    </select>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="simularLineasTendencia('admin')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow transition flex items-center space-x-2">
+                            <i class="fa-solid fa-play"></i><span>Simular Tendencias Mes a Mes</span>
+                        </button>
+                        <select id="metricSelector" class="bg-slate-50 border border-slate-300 text-sm font-semibold rounded-xl px-4 py-2.5 outline-none focus:border-blue-500 shadow-sm" onchange="changeMainMetric('admin')">
+                            <option value="ARCA">Arcas</option>
+                            <option value="FLORES">Flores</option>
+                            <option value="AGENCIADO">Agenciado</option>
+                            <option value="SALA">Sala de Velaciones</option>
+                            <option value="CARGADORES">Cargadores</option>
+                            <option value="VESTIR">Vestir / Amortajar</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="chart-container">
                     <canvas id="monthlyChart"></canvas>
@@ -650,7 +687,7 @@
             </div>
 
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-dist">
-                <button onclick="toggleFullscreenCard('admin-card-dist')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('admin-card-dist')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <h2 class="text-2xl font-bold text-slate-800 mb-6 pr-12">Distribución del Ingreso (2026)</h2>
@@ -662,7 +699,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-quarter">
-                <button onclick="toggleFullscreenCard('admin-card-quarter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('admin-card-quarter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="flex justify-between items-center mb-6 pr-12">
@@ -683,7 +720,7 @@
             </div>
 
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-ticket">
-                <button onclick="toggleFullscreenCard('admin-card-ticket')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('admin-card-ticket')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="pr-12">
@@ -770,9 +807,8 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
-            <!-- Banner grande de 365 servicios a cierre de septiembre ubicado junto al gráfico de tendencia -->
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-trend">
-                <button onclick="toggleFullscreenCard('admin-card-trend')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('admin-card-trend')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 
@@ -801,7 +837,7 @@
             </div>
 
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-margin">
-                <button onclick="toggleFullscreenCard('admin-card-margin')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('admin-card-margin')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="pr-12">
@@ -833,7 +869,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
             <div class="glass-panel p-8 rounded-2xl flex flex-col justify-between relative transition-all duration-300" id="admin-card-scatter">
-                <button onclick="toggleFullscreenCard('admin-card-scatter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+                <button onclick="toggleFullscreenCard('admin-card-scatter')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                     <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
                 </button>
                 <div class="pr-12">
@@ -908,7 +944,7 @@
         </div>
 
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-radar">
-            <button onclick="toggleFullscreenCard('admin-card-radar')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('admin-card-radar')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -923,7 +959,7 @@
         </div>
 
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-stacked">
-            <button onclick="toggleFullscreenCard('admin-card-stacked')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('admin-card-stacked')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -939,7 +975,7 @@
         </div>
 
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-polar">
-            <button onclick="toggleFullscreenCard('admin-card-polar')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('admin-card-polar')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -955,7 +991,7 @@
         </div>
 
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-multiyear">
-            <button onclick="toggleFullscreenCard('admin-card-multiyear')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('admin-card-multiyear')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -970,7 +1006,7 @@
         </div>
 
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-esquelas">
-            <button onclick="toggleFullscreenCard('admin-card-esquelas')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('admin-card-esquelas')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -1004,7 +1040,7 @@
         </div>
 
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6 relative transition-all duration-300" id="admin-card-sabi">
-            <button onclick="toggleFullscreenCard('admin-card-sabi')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa">
+            <button onclick="toggleFullscreenCard('admin-card-sabi')" class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-blue-100 text-slate-500 hover:text-blue-600 p-2.5 rounded-xl transition shadow-sm" title="Pantalla Completa (Ampliar Letra)">
                 <i class="fa-solid fa-expand text-lg fullscreen-icon"></i>
             </button>
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 pr-12">
@@ -1115,7 +1151,6 @@
             </div>
         </div>
 
-        <!-- SECCIÓN 13: SIMULADOR DE PUNTO DE EQUILIBRIO & STRESS-TESTING -->
         <div class="glass-panel p-8 rounded-2xl fade-in space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
                 <div>
@@ -1253,6 +1288,20 @@
                 if (stackedBarChartPres) stackedBarChartPres.resize();
                 if (sabiHistoryChartPres) sabiHistoryChartPres.resize();
                 if (sabiBenchmarkChartPres) sabiBenchmarkChartPres.resize();
+                
+                if (multiYearChart) multiYearChart.resize();
+                if (monthlyChart) monthlyChart.resize();
+                if (quarterChart) quarterChart.resize();
+                if (ticketChart) ticketChart.resize();
+                if (trend2027Chart) trend2027Chart.resize();
+                if (marginBarChart) marginBarChart.resize();
+                if (scatterChart) scatterChart.resize();
+                if (radarChart) radarChart.resize();
+                if (stackedBarChart) stackedBarChart.resize();
+                if (polarAreaChart) polarAreaChart.resize();
+                if (esquelasDynamicChart) esquelasDynamicChart.resize();
+                if (sabiHistoryChart) sabiHistoryChart.resize();
+                if (sabiBenchmarkChart) sabiBenchmarkChart.resize();
             }, 100);
         }
 
@@ -1442,6 +1491,33 @@
                     </div>
                 </div>
             `;
+        }
+
+        function simularLineasTendencia(view = 'admin') {
+            const currentMetric = view === 'pres' ? document.getElementById('metricSelectorPres').value : document.getElementById('metricSelector').value;
+            const targetChart = view === 'pres' ? monthlyChartPres : monthlyChart;
+
+            if (!targetChart) return;
+
+            const orig2024 = [...db[currentMetric][2024]];
+            const orig2025 = [...db[currentMetric][2025]];
+            const orig2026 = [...db[currentMetric][2026]];
+
+            let step = 0;
+            const totalSteps = meses.length;
+
+            const interval = setInterval(() => {
+                step++;
+                if (step > totalSteps) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                targetChart.data.datasets[0].data = orig2024.map((val, idx) => idx < step ? val : null);
+                targetChart.data.datasets[1].data = orig2025.map((val, idx) => idx < step ? val : null);
+                targetChart.data.datasets[2].data = orig2026.map((val, idx) => idx < step ? val : null);
+                targetChart.update();
+            }, 300);
         }
 
         function actualizarStressTest() {
